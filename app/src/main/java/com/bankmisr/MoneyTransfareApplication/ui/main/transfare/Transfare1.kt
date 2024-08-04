@@ -1,4 +1,4 @@
-package com.bankmisr.MoneyTransfareApplication.ui.transfare
+package com.bankmisr.MoneyTransfareApplication.ui.main.transfare
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -661,7 +661,7 @@ fun favouritListItem(transaction: Transaction, modifier: Modifier = Modifier//, 
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 18.dp, vertical = 4.dp).clickable{
-                Recipient.RecipientName=transaction.receiver
+                Recipient.RecipientName =transaction.receiver
                 Recipient.RecipientAccount =transaction.receiverAcount
             }
     ) {

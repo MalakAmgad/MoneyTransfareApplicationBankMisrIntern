@@ -1,4 +1,4 @@
-package com.bankmisr.MoneyTransfareApplication.ui.transfare
+package com.bankmisr.MoneyTransfareApplication.ui.main.transfare
 
 import android.content.Intent
 import android.net.Uri

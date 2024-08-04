@@ -1,4 +1,4 @@
-package com.bankmisr.MoneyTransfareApplication.ui.Transaction
+package com.bankmisr.MoneyTransfareApplication.ui.main.Transaction
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

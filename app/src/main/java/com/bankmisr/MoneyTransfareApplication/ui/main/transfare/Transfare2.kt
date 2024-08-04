@@ -1,7 +1,5 @@
-package com.bankmisr.MoneyTransfareApplication.ui.transfare
+package com.bankmisr.MoneyTransfareApplication.ui.main.transfare
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -21,9 +19,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -51,13 +46,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
@@ -66,14 +57,12 @@ import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.R
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
 import com.bankmisr.MoneyTransfareApplication.ui.commonUI.bottomBar
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun transfare2(transaction: Transaction?, modifier: Modifier = Modifier, navController: NavController) {
+fun Transfer2(transaction: Transaction?, modifier: Modifier = Modifier, navController: NavController) {
     // val t =transaction
     val t = Transaction(
         amount = 500.0f,
