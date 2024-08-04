@@ -78,13 +78,15 @@ fun TransferScreen(navController: NavController,
                  viewModel: UserViewModel = viewModel()
 ) {
     var showBottomSheet by remember { mutableStateOf(false) }
-var amountUSD=1
+    var accountBalance =1000000.0
     var usdEgp=48.4220
-    var amountEGP=(amountUSD *usdEgp)
-
+    var amountUSD by remember { mutableStateOf(0.0) }
+    var amountUSDtext by remember { mutableStateOf("0") }
+    var amountEGP=(amountUSD * usdEgp)
     var RecipientName by remember { mutableStateOf(Recipient.RecipientName) }
     var RecipientAccount by remember { mutableStateOf(Recipient.RecipientAccount) }
     val sheetState = rememberModalBottomSheetState()
+    var isLimit=(amountEGP<=5000)
 
 
     Scaffold(
@@ -157,6 +159,40 @@ var amountUSD=1
                     .padding(vertical = 16.dp)
                     .wrapContentHeight(Alignment.CenterVertically)
             )}
+            item{
+                var isLimitExceeded by remember { mutableStateOf(false) }
+                OutlinedTextField(
+                    value = amountUSDtext,
+                    onValueChange = { newValue ->
+                        val potentialAmountUSD = newValue.toDoubleOrNull() ?: 0.0
+                        val potentialAmountEGP = potentialAmountUSD * usdEgp
+
+                        if (potentialAmountEGP <= 5000 && potentialAmountEGP <=accountBalance ) {
+                            amountUSDtext = newValue
+                            amountUSD = potentialAmountUSD
+                            isLimitExceeded = false
+                        } else {
+                            isLimitExceeded = true
+                            amountUSD =103.258
+                        }
+                    },
+                    modifier = Modifier
+                        // .width(343.dp)
+                        .padding(horizontal = 10.dp)
+                        .height(54.dp)
+                        .fillMaxWidth()
+                        .background(colorResource(id = R.color.white)),
+                    placeholder = {
+                        Text(
+                            "Enter Amount (USD)",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.W400,
+                            lineHeight = 21.sp,
+                            color = colorResource(id = R.color.G70)
+                        )
+                    },
+                )
+            }
             item {Text(
                 text = "Choose Currency", // note.noteDetails,
                 fontSize = 16.sp,
@@ -291,7 +327,7 @@ var amountUSD=1
                         contentAlignment = Alignment.Center
                     ){
                         Text(
-                            text = "${amountUSD}",
+                            text = String.format("%.2f", amountUSD),
                             fontSize = 20.sp,
                             lineHeight = 30.sp,
                             fontWeight = FontWeight.Bold,
@@ -394,7 +430,7 @@ var amountUSD=1
                         contentAlignment = Alignment.Center
                     ){
                         Text(
-                            text = "${amountEGP}",
+                            text = String.format("%.1f", amountEGP),
                             fontSize = 20.sp,
                             lineHeight = 30.sp,
                             fontWeight = FontWeight.Bold,
