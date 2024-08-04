@@ -61,7 +61,7 @@ fun MoreMainScreen(navController: NavController) {
         showBottomSheet = true
     }
     fun onClickLogout(){
-        NavController.
+        
     }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
