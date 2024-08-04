@@ -1,5 +1,8 @@
 package com.bankmisr.MoneyTransfareApplication
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -26,6 +29,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        createNotificationChannel(this)
         setContent {
             var showSplashScreen by remember { mutableStateOf(true) }
 
@@ -37,7 +41,9 @@ class MainActivity : ComponentActivity() {
                 }
             } else {
                 MoneyTransfareApplicationTheme {
-                        MainNavigation()
+                      //  MainNavigation()
+                   // MainScreen()
+                    ApppNavHost()
                 }
             }
 
@@ -45,3 +51,13 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+fun createNotificationChannel(context: Context){
+    val name ="Transaction"
+    val importance= NotificationManager.IMPORTANCE_DEFAULT
+    val channel = NotificationChannel("1",name,importance)
+    channel.description = "Transfare Notification"
+    val notificationManager=
+        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    notificationManager.createNotificationChannel(channel)
+
+}

@@ -37,7 +37,7 @@ object Route {
 @Composable
 fun ApppNavHost() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = TRANSFARE1) {
+    NavHost(navController = navController, startDestination = SIGNIN) {
         composable(route = SIGNIN) { signInScreen(navController = navController) }
         composable(route = SIGNUP) { signUp1(navController = navController) }
         // composable(route = SIGNUP2){ signUp2(navController = navController) }

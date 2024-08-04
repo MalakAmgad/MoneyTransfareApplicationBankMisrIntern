@@ -65,6 +65,8 @@ import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
+import com.bankmisr.MoneyTransfareApplication.Routes.MainRout
+import com.bankmisr.MoneyTransfareApplication.Routes.Route.MAIN_SCREEN
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.isValidPassword
 import com.bankmisr.MoneyTransfareApplication.ui.theme.MoneyTransfareApplicationTheme
 
@@ -179,10 +181,10 @@ fun signInScreen (
             }
             Column(
                 modifier = Modifier
-                    .width(IntrinsicSize.Min)
+                    .width(IntrinsicSize.Min).fillMaxSize()
                     .height(IntrinsicSize.Max)
                 //  .padding(start = 16.dp, top = 242.dp)
-                , verticalArrangement = Arrangement.spacedBy(10.dp)
+                , verticalArrangement =Arrangement.Center
 
             ) {
                 Column() {
@@ -272,11 +274,12 @@ fun signInScreen (
                 //   Spacer(modifier = modifier.padding(5.dp))
                 Button(
                     onClick = { viewModel.loginUser(Email, Password)
-                              if(viewModel.success){
-                                  //navigate
+                        //      if(viewModel.success){
+                                  navController.navigate(MAIN_SCREEN)
+                        //      }
+                        //else{ Toast.makeText(context, "Wrong login or password ", Toast.LENGTH_SHORT).show();  }
                               }
-                        else{ Toast.makeText(context, "Wrong login or password ", Toast.LENGTH_SHORT).show();  }
-                              },
+                    ,
                     modifier = Modifier
                         .fillMaxWidth()
                         .width(343.dp)

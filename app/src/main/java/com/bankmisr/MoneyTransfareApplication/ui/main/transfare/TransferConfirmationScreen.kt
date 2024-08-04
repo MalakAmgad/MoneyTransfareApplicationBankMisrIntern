@@ -1,5 +1,23 @@
 package com.bankmisr.MoneyTransfareApplication.ui.main.transfare
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.os.Build
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -8,9 +26,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -41,19 +61,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.Typeface
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.R
+import com.bankmisr.MoneyTransfareApplication.Routes.MainRout
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
 import java.util.Date
 
@@ -121,10 +150,13 @@ fun TransferConfirmationScreen(transaction: Transaction?, modifier: Modifier = M
                     )
                 )
                 .padding(innerPadding),
-            verticalArrangement = Arrangement.SpaceBetween,
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.height(14.dp))
             StepIndicator1(currentStep = 2)
+
+            Spacer(modifier = Modifier.height(15.dp))
 
 
             // Adjusted Text Columns
@@ -138,6 +170,7 @@ fun TransferConfirmationScreen(transaction: Transaction?, modifier: Modifier = M
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center
                 )
+                Spacer(modifier = Modifier.height(14.dp))
                 Text(
                     text = "Transfare amount",
                     color = colorResource(id = R.color.G900),
@@ -147,13 +180,14 @@ fun TransferConfirmationScreen(transaction: Transaction?, modifier: Modifier = M
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center
                 )
+                Spacer(modifier = Modifier.height(8.dp))
 
             }
             Column(
                 modifier = modifier
                     .fillMaxWidth()
                     .weight(0.5f),
-                verticalArrangement = Arrangement.SpaceBetween
+              //  verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Row(modifier = modifier.padding(10.dp)) {
                     Text(
@@ -166,6 +200,7 @@ fun TransferConfirmationScreen(transaction: Transaction?, modifier: Modifier = M
                         textAlign = TextAlign.Justify,
                         modifier = modifier.wrapContentHeight(Alignment.CenterVertically)
                     )
+                    Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = "${t.amount * 48} EGP",
                         fontSize = 16.sp,
@@ -195,6 +230,7 @@ fun TransferConfirmationScreen(transaction: Transaction?, modifier: Modifier = M
 
                 Box(modifier = Modifier.fillMaxWidth()) {
                     Column {
+                        Spacer(modifier = Modifier.height(20.dp))
                         //first card
                         Card(
                             colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.p50)),
@@ -273,6 +309,7 @@ fun TransferConfirmationScreen(transaction: Transaction?, modifier: Modifier = M
                                 }
                             }
                         }
+                        Spacer(modifier = Modifier.height(20.dp))
                         // Second Card
                         Card(
                             colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.p50)),
@@ -381,11 +418,10 @@ fun TransferConfirmationScreen(transaction: Transaction?, modifier: Modifier = M
                     .padding(5.dp)
             ) {
 
-
                     Button(
                         onClick = {
                             //navigate
-
+                            navController.navigate("${MainRout.TRANSFAREPAYMENT }/${t}")
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -396,7 +432,7 @@ fun TransferConfirmationScreen(transaction: Transaction?, modifier: Modifier = M
                         colors = ButtonDefaults.buttonColors(colorResource(id = R.color.marron))
                     ) {
                         Text(
-                            text = "Back Home", color = colorResource(id = R.color.white),
+                            text = "Confirmation", color = colorResource(id = R.color.white),
                             modifier = Modifier.fillMaxWidth(),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.W500,
@@ -404,6 +440,16 @@ fun TransferConfirmationScreen(transaction: Transaction?, modifier: Modifier = M
                             textAlign = TextAlign.Center
                         )
                     }
+
+                }
+                Row(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .height(121.dp)
+                        .padding(5.dp)
+                ) {
+
+
                     var buttonClicked by remember { mutableStateOf(false) }
                     Button(
                         onClick = {
@@ -415,7 +461,8 @@ fun TransferConfirmationScreen(transaction: Transaction?, modifier: Modifier = M
                             .fillMaxWidth()
                             .width(343.dp)
                             .height(60.dp)
-                            .padding(top = 10.dp).border(
+                           // .padding(top = 10.dp)
+                            .border(
                                 width = 2.dp, // Adjust border width as needed
                                 color = colorResource(id = R.color.marron),
                                 shape = RoundedCornerShape(6.dp)
@@ -439,11 +486,27 @@ fun TransferConfirmationScreen(transaction: Transaction?, modifier: Modifier = M
                         )
                     }
 
-
                 }
 
             }
         }
 
     }
+}
+
+@SuppressLint("MissingPermission")
+@Composable
+fun sendNotification(context: Context, title: String, text: String) {
+    //var notification = painterResource(id = R.drawable.notification)
+    val builder = NotificationCompat.Builder(context, "1")
+        .setSmallIcon(R.drawable.notification)
+        .setContentTitle(title)
+        .setContentText(text)
+        .setAutoCancel(true)
+
+
+    // Show notification if permission is granted
+
+    NotificationManagerCompat.from(context).notify(99, builder.build())
+
 }

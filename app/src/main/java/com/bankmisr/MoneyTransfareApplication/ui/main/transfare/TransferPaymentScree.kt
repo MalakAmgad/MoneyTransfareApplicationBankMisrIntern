@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -49,6 +50,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -64,6 +66,7 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.R
+import com.bankmisr.MoneyTransfareApplication.Routes.MainRout
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
 import com.bankmisr.MoneyTransfareApplication.ui.commonUI.bottomBar
 import java.text.SimpleDateFormat
@@ -124,6 +127,11 @@ fun TransferPaymentScreen(transaction: Transaction?, modifier: Modifier = Modifi
             )
         },
     ) { innerPadding ->
+        val context= LocalContext.current
+
+        sendNotification(
+            context = context, title ="The Transaction is${t.status}",
+            text ="you have sent${t.amount}USD to ${t.receiver  }" )
 
         Column(
             modifier = Modifier
@@ -138,28 +146,20 @@ fun TransferPaymentScreen(transaction: Transaction?, modifier: Modifier = Modifi
                     )
                 )
                 .padding(innerPadding),
-            verticalArrangement = Arrangement.SpaceBetween,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            StepIndicator1(currentStep = 2)
-
-            Box(
-                modifier = Modifier
-                    .size(100.dp)
-                    .background(
-                       color = colorResource(id = R.color.lightRed)
-                    )//.shadow(elevation = 4.dp, clip = true)
-                    .padding(15.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = if (true) Icons.Filled.Done else Icons.Filled.Close,
+            Spacer(modifier = Modifier.height(14.dp))
+            StepIndicator1(currentStep = 3)
+            Spacer(modifier = Modifier.height(14.dp))
+            Image(
+                    painter = painterResource(id = R.drawable.check_mark),
                     contentDescription = "status",
-                    tint = Color.White,
-                    modifier = Modifier.size(50.22.dp)
+                  //  tint = Color.White,
+                    modifier = Modifier.size(100.dp)
                 )
-            }
 
+            Spacer(modifier = Modifier.height(14.dp))
 
             // Adjusted Text Columns
             Column {
@@ -174,7 +174,7 @@ fun TransferPaymentScreen(transaction: Transaction?, modifier: Modifier = Modifi
                 )
 
             }
-
+            Spacer(modifier = Modifier.height(14.dp))
             // New position for the SmallFloatingActionButton
 
             // Card Columns
@@ -341,7 +341,6 @@ fun TransferPaymentScreen(transaction: Transaction?, modifier: Modifier = Modifi
                         }
                     }
 
-
                     SmallFloatingActionButton(
                         onClick = { /* Handle click */ },
                         modifier = Modifier
@@ -362,19 +361,13 @@ fun TransferPaymentScreen(transaction: Transaction?, modifier: Modifier = Modifi
                 }
             }
 
-                Row(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .height(121.dp)
-                        .padding(5.dp)
-                ) {
                     Column(
                         modifier = modifier
                             .fillMaxWidth()
-                            .weight(0.5f),
-                        verticalArrangement = Arrangement.SpaceBetween
+                            .weight(0.8f),
+                        verticalArrangement = Arrangement.Center
                     ) {
-                        Row(modifier = modifier.padding(10.dp)) {
+                        Row(modifier = modifier.padding( horizontal = 10.dp)) {
                             Text(
                                 text = "Transfer amount amount",
                                 fontSize = 16.sp,
@@ -406,17 +399,18 @@ fun TransferPaymentScreen(transaction: Transaction?, modifier: Modifier = Modifi
                                 //  .height(50.dp)
                                 .fillMaxWidth()
                         )
-
+                        Spacer(modifier = Modifier.height(14.dp))
                         Button(
                             onClick = {
                                 //navigate
+                                navController.navigate("${MainRout.HOME }")
 
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .width(343.dp)
-                                .height(60.dp)
-                                .padding(top = 10.dp),
+                                .height(70.dp)
+                                .padding(top = 10.dp, start = 10.dp,end=10.dp),
                             shape = RoundedCornerShape(6.dp),
                             colors = ButtonDefaults.buttonColors(colorResource(id = R.color.marron))
                         ) {
@@ -429,7 +423,9 @@ fun TransferPaymentScreen(transaction: Transaction?, modifier: Modifier = Modifi
                                 textAlign = TextAlign.Center
                             )
                         }
+
                         var buttonClicked by remember { mutableStateOf(false) }
+                        Spacer(modifier = Modifier.height(30.dp))
                         Button(
                             onClick = {
                                 buttonClicked = !buttonClicked
@@ -440,7 +436,8 @@ fun TransferPaymentScreen(transaction: Transaction?, modifier: Modifier = Modifi
                                 .fillMaxWidth()
                                 .width(343.dp)
                                 .height(60.dp)
-                                .padding(top = 10.dp).border(
+                                .padding(top = 10.dp, start = 10.dp,end=10.dp)
+                                .border(
                                     width = 2.dp, // Adjust border width as needed
                                     color = colorResource(id = R.color.marron),
                                     shape = RoundedCornerShape(6.dp)
@@ -464,11 +461,11 @@ fun TransferPaymentScreen(transaction: Transaction?, modifier: Modifier = Modifi
                             )
                         }
 
-
                     }
 
-            }
+
         }
 
     }
 }
+

@@ -1,6 +1,14 @@
 package com.bankmisr.MoneyTransfareApplication.ui.main
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import androidx.compose.foundation.background
@@ -38,17 +46,40 @@ import com.bankmisr.MoneyTransfareApplication.Routes.MainNavigation
 import com.bankmisr.MoneyTransfareApplication.models.BottomNavigationItem
 
 import androidx.compose.runtime.*
-import kotlinx.coroutines.delay
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier//,onUserActivity: () -> Unit
 ) {
-    
+    val context= LocalContext.current
+    requestNotificationPermission(context)
         MainNavigation()
 
 }
 
+
+
+fun requestNotificationPermission(context: Context) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        val hasPermission = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
+
+        if (!hasPermission) {
+            ActivityCompat.requestPermissions(
+                context as Activity,
+                arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                0
+            )
+        }
+    }
+}
 
 //@Preview
 //@Composable
@@ -61,6 +92,7 @@ fun MainScreen(
 
 @Composable
 fun MainNavigationBar(navController: NavController, modifier: Modifier = Modifier) {
+
 
     val navigationItems = listOf(
         BottomNavigationItem(

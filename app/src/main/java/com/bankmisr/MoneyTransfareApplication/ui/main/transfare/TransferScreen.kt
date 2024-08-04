@@ -60,16 +60,28 @@ import androidx.compose.ui.text.font.FontWeight.Companion.W600
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.R
+import com.bankmisr.MoneyTransfareApplication.Routes.MainRout
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
+import java.util.Date
 
 
- class Recipient() {
+class Recipient() {
     companion object {
         var RecipientName: String=""
         var RecipientAccount: String=""
     }
 }
+val transaction = Transaction(
+    amount = 500.0f,
+    sender = "Alice",
+    SenderAcount = "12345",
+    receiver = "Bob",
+    receiverAcount = "98765",
+    reference = "REF54321",
+    date = Date().time,
+    status = "Successful"
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -640,7 +652,7 @@ fun TransferScreen(navController: NavController,
                 //   Spacer(modifier = modifier.padding(5.dp))
                 Button(
                     onClick = {
-
+                        navController.navigate("${MainRout.TRANSFARECONFIRMATION}/${transaction }")
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -771,7 +783,7 @@ fun StepIndicator1(currentStep: Int) {
                         ) // Set background color (optional)
                         .border(
                             width = 2.dp,
-                            color = if (currentStep == index + 1) colorResource(id = R.color.p300) else colorResource(
+                            color = if (currentStep >= index + 1) colorResource(id = R.color.p300) else colorResource(
                                 id = R.color.g2
                             ).copy(alpha = 0.5f),
                             shape = CircleShape
@@ -783,7 +795,7 @@ fun StepIndicator1(currentStep: Int) {
                         fontSize = 14.sp,
                         lineHeight = 21.sp ,
                         fontWeight = W500 ,
-                        color = if (currentStep == index + 1) colorResource(id = R.color.p300) else colorResource(id = R.color.g2).copy(alpha = 0.5f),
+                        color = if (currentStep >= index + 1) colorResource(id = R.color.p300) else colorResource(id = R.color.g2).copy(alpha = 0.5f),
                         style = MaterialTheme.typography.headlineSmall,
                         modifier = Modifier.padding(8.dp)
                     )
@@ -794,7 +806,7 @@ fun StepIndicator1(currentStep: Int) {
                     lineHeight = 21.sp ,
                     fontWeight = W500 ,
                     style = MaterialTheme.typography.bodySmall,
-                    color = if (currentStep == index + 1) colorResource(id = R.color.p300) else colorResource(id = R.color.g2).copy(alpha = 0.5f)
+                    color = if (currentStep >= index + 1) colorResource(id = R.color.p300) else colorResource(id = R.color.g2).copy(alpha = 0.5f)
                 )
 
 
@@ -807,7 +819,7 @@ fun StepIndicator1(currentStep: Int) {
                         .height(1.dp)
                         .width(65.dp)
                         .background(
-                            color = if (currentStep == index + 1) colorResource(id = R.color.G900) else colorResource(
+                            color = if (currentStep >= index + 1) colorResource(id = R.color.G900) else colorResource(
                                 id = R.color.G700
                             ).copy(alpha = 0.5f)
 

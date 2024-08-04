@@ -296,7 +296,7 @@ fun signUp1 (
                        // viewModel.upsert(User(fullName = FullName,email = Email,password = Password))
                         //FullName,Email,Password,SIGNUP2
                         saveCredentials(Email, Password, context)
-                        navController.navigate("$SIGNUP/${FullName}/${Email}/${Password}")
+                        navController.navigate("$SIGNUP2/${FullName}/${Email}/${Password}")
                     },
                     modifier = Modifier
                         .fillMaxWidth()
