@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Money Transfare Application</string>
+    <string name="already">Already have an account?</string>
+    <string name="Dont">Dont you have an account?</string>
+    <string name="signup">Sign Up</string>
+    <string name="signin">Sign In</string>
+    <string name="have_account">%1$s %2$s</string>
+    <string name="Photo">photo</string>
+    <string name="welcome">Welcome Back,</string>
+    <string name="currentBalance">Current Balance</string>
+    <string name="Transfer">Transfer"</string>
+    <string name="Transactions">Transactions"</string>
+    <string name="Cards">Cards"</string>
+    <string name="services">Services"</string>
+    <string name="Account">Account"</string>
+</resources>

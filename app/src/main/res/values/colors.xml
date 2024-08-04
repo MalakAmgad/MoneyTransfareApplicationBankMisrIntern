@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="Burgundy">#521220</color>
+    <color name="lightPink">#FFEAEE</color>
+    <color name="G900">#24221E</color>
+    <color name="G700"> #3C3A37</color>
+    <color name="G70"> #B0AFAE</color>
+    <color name="marron"> #871E35</color>
+    <color name="G100">#898886</color>
+    <color name="seashell">#FFF8E7</color>
+    <color name="pastel">#FFEAEE</color>
+    <color name="p50">#F3E9EB</color>
+    <color name="p55">#DED9DA</color>
+    <color name="p300">#871E35</color>
+    <color name="Gray">#706E6C</color>
+    <color name="G200">#7C7A78</color>
+    <color name="mintGreen">#EAF3EC</color>
+    <color name="Green">#118A30</color>
+    <color name="lavenderBrush">#FFEFEF</color>
+    <color name="D300">#D80027</color>
+    <color name="purple">#9B4457</color>
+    <color name="yellow">#9B7209</color>
+    <color name="G40">#E3E2E2</color>
+    <color name="darkGreen">#3C3A37</color>
+    <color name="p75">#CEA3AC</color>
+    <color name="g2">#A3AAB2</color>
+    <color name="lightRed">#C36565</color>
+</resources>
