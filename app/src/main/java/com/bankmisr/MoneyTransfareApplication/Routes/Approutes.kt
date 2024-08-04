@@ -22,11 +22,11 @@ import com.bankmisr.MoneyTransfareApplication.ui.Error.serverError
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signIn.signInScreen
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signUp2.signUp2
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.signUp1
-import com.bankmisr.MoneyTransfareApplication.ui.Transaction.Transactions
-import com.bankmisr.MoneyTransfareApplication.ui.Transaction.transactionDetails
+import com.bankmisr.MoneyTransfareApplication.ui.main.Transaction.Transactions
+import com.bankmisr.MoneyTransfareApplication.ui.main.Transaction.transactionDetails
 import com.bankmisr.MoneyTransfareApplication.ui.notifications.Notifications
-import com.bankmisr.MoneyTransfareApplication.ui.transfare.Transfare1Screen
-import com.bankmisr.MoneyTransfareApplication.ui.transfare.TransferMainScreen
+import com.bankmisr.MoneyTransfareApplication.ui.main.transfare.Transfare1Screen
+import com.bankmisr.MoneyTransfareApplication.ui.main.transfare.TransferMainScreen
 
 object Route {
     const val SIGNIN = "SignUp"

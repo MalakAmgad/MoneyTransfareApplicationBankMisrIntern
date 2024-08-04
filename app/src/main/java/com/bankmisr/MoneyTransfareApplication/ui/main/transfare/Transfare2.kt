@@ -1,4 +1,4 @@
-package com.bankmisr.MoneyTransfareApplication.ui.transfare
+package com.bankmisr.MoneyTransfareApplication.ui.main.transfare
 
 import android.content.Intent
 import android.net.Uri
@@ -73,7 +73,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun transfare3(transaction: Transaction?, modifier: Modifier = Modifier, navController: NavController) {
+fun transfare2(transaction: Transaction?, modifier: Modifier = Modifier, navController: NavController) {
     // val t =transaction
     val t = Transaction(
         amount = 500.0f,
@@ -85,10 +85,6 @@ fun transfare3(transaction: Transaction?, modifier: Modifier = Modifier, navCont
         date = Date().time,
         status = "Successful"
     )
-
-
-
-
 
     Scaffold(
         topBar = {
@@ -146,28 +142,20 @@ fun transfare3(transaction: Transaction?, modifier: Modifier = Modifier, navCont
         ) {
             StepIndicator1(currentStep = 2)
 
-            Box(
-                modifier = Modifier
-                    .size(100.dp)
-                    .background(
-                       color = colorResource(id = R.color.lightRed)
-                    )//.shadow(elevation = 4.dp, clip = true)
-                    .padding(15.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = if (true) Icons.Filled.Done else Icons.Filled.Close,
-                    contentDescription = "status",
-                    tint = Color.White,
-                    modifier = Modifier.size(50.22.dp)
-                )
-            }
-
 
             // Adjusted Text Columns
             Column {
                 Text(
-                    text = "Your transfer was successful",
+                    text = "${t.amount} USD",
+                    color = colorResource(id = R.color.G900),
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.W600,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    text = "Transfare amount",
                     color = colorResource(id = R.color.G900),
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 20.sp,
@@ -177,7 +165,44 @@ fun transfare3(transaction: Transaction?, modifier: Modifier = Modifier, navCont
                 )
 
             }
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .weight(0.5f),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(modifier = modifier.padding(10.dp)) {
+                    Text(
+                        text = "Transfer amount amount",
+                        fontSize = 16.sp,
+                        lineHeight = 24.sp,
+                        fontWeight = FontWeight.W400,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = colorResource(id = R.color.G700),
+                        textAlign = TextAlign.Justify,
+                        modifier = modifier.wrapContentHeight(Alignment.CenterVertically)
+                    )
+                    Text(
+                        text = "${t.amount * 48} EGP",
+                        fontSize = 16.sp,
+                        lineHeight = 24.sp,
+                        fontWeight = FontWeight.W400,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = colorResource(id = R.color.G100),
+                        textAlign = TextAlign.End,
+                        modifier = modifier
+                            .fillMaxWidth()
+                    )
+                }
 
+                HorizontalDivider(
+                    color = colorResource(id = R.color.p55),
+                    thickness = 1.dp,
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp)
+                        //  .height(50.dp)
+                        .fillMaxWidth()
+                )
             // New position for the SmallFloatingActionButton
 
             // Card Columns
@@ -358,117 +383,80 @@ fun transfare3(transaction: Transaction?, modifier: Modifier = Modifier, navCont
                         elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 6.dp)
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.baseline_check_24), modifier = modifier.size(26.dp),
+                            painter = painterResource(id = R.drawable.transfer_money_1), modifier = modifier.size(26.dp),
                             contentDescription = "Confirm"
                         )
                     }
                 }
             }
 
-                Row(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .height(121.dp)
-                        .padding(5.dp)
-                ) {
-                    Column(
-                        modifier = modifier
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(121.dp)
+                    .padding(5.dp)
+            ) {
+
+
+                    Button(
+                        onClick = {
+                            //navigate
+
+                        },
+                        modifier = Modifier
                             .fillMaxWidth()
-                            .weight(0.5f),
-                        verticalArrangement = Arrangement.SpaceBetween
+                            .width(343.dp)
+                            .height(60.dp)
+                            .padding(top = 10.dp),
+                        shape = RoundedCornerShape(6.dp),
+                        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.marron))
                     ) {
-                        Row(modifier = modifier.padding(10.dp)) {
-                            Text(
-                                text = "Transfer amount amount",
-                                fontSize = 16.sp,
-                                lineHeight = 24.sp,
-                                fontWeight = FontWeight.W400,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = colorResource(id = R.color.G700),
-                                textAlign = TextAlign.Justify,
-                                modifier = modifier.wrapContentHeight(Alignment.CenterVertically)
-                            )
-                            Text(
-                                text = "${t.amount * 48} EGP",
-                                fontSize = 16.sp,
-                                lineHeight = 24.sp,
-                                fontWeight = FontWeight.W400,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = colorResource(id = R.color.G100),
-                                textAlign = TextAlign.End,
-                                modifier = modifier
-                                    .fillMaxWidth()
-                            )
-                        }
-
-                        HorizontalDivider(
-                            color = colorResource(id = R.color.p55),
-                            thickness = 1.dp,
-                            modifier = Modifier
-                                .padding(horizontal = 10.dp)
-                                //  .height(50.dp)
-                                .fillMaxWidth()
+                        Text(
+                            text = "Back Home", color = colorResource(id = R.color.white),
+                            modifier = Modifier.fillMaxWidth(),
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.W500,
+                            lineHeight = 21.sp,
+                            textAlign = TextAlign.Center
                         )
-
-                        Button(
-                            onClick = {
-                                //navigate
-
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .width(343.dp)
-                                .height(60.dp)
-                                .padding(top = 10.dp),
-                            shape = RoundedCornerShape(6.dp),
-                            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.marron))
-                        ) {
-                            Text(
-                                text = "Back Home", color = colorResource(id = R.color.white),
-                                modifier = Modifier.fillMaxWidth(),
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.W500,
-                                lineHeight = 21.sp,
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                        var buttonClicked by remember { mutableStateOf(false) }
-                        Button(
-                            onClick = {
-                                buttonClicked = !buttonClicked
-
-
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .width(343.dp)
-                                .height(60.dp)
-                                .padding(top = 10.dp).border(
-                                    width = 2.dp, // Adjust border width as needed
-                                    color = colorResource(id = R.color.marron),
-                                    shape = RoundedCornerShape(6.dp)
-                                ),
-                            shape = RoundedCornerShape(6.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                if (buttonClicked) colorResource(id = R.color.marron) else Color.Transparent
-
-                            )
-                        ) {
-                            Text(
-                                text = "Add to Favourite",
-                                color = if (buttonClicked) colorResource(id = R.color.white) else colorResource(
-                                    id = R.color.marron
-                                ),
-                                modifier = Modifier.fillMaxWidth(),
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.W500,
-                                lineHeight = 21.sp,
-                                textAlign = TextAlign.Center
-                            )
-                        }
-
-
                     }
+                    var buttonClicked by remember { mutableStateOf(false) }
+                    Button(
+                        onClick = {
+                            buttonClicked = !buttonClicked
+
+
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .width(343.dp)
+                            .height(60.dp)
+                            .padding(top = 10.dp).border(
+                                width = 2.dp, // Adjust border width as needed
+                                color = colorResource(id = R.color.marron),
+                                shape = RoundedCornerShape(6.dp)
+                            ),
+                        shape = RoundedCornerShape(6.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            if (buttonClicked) colorResource(id = R.color.marron) else Color.Transparent
+
+                        )
+                    ) {
+                        Text(
+                            text = "Add to Favourite",
+                            color = if (buttonClicked) colorResource(id = R.color.white) else colorResource(
+                                id = R.color.marron
+                            ),
+                            modifier = Modifier.fillMaxWidth(),
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.W500,
+                            lineHeight = 21.sp,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+
+
+                }
 
             }
         }
