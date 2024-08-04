@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.bankmisr.MoneyTransfareApplication.ui.main.transfare.Transfare1Screen
+import com.bankmisr.MoneyTransfareApplication.ui.main.transfare.Transfer2
 import com.bankmisr.MoneyTransfareApplication.ui.main.transfare.TransferMainScreen
 
 object MainRout {
@@ -37,8 +38,5 @@ fun MainNavigation(modifier: Modifier = Modifier) {
             Transfare1Screen(navController = navController)
         }
 
-        composable(MainRout.TRANSFARE1){
-            Transfare1Screen(navController = navController)
-        }
     }
 }
