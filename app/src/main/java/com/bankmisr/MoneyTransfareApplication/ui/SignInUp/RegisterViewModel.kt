@@ -36,6 +36,7 @@ class RegisterViewModel : ViewModel() {
             } catch (e: Exception) {
                 _hasError.update { true }
                 Log.d("trace","Error: ${e.message}")
+
             }
         }
 
