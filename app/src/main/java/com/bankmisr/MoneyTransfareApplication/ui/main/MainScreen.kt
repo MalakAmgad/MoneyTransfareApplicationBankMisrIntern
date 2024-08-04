@@ -1,8 +1,13 @@
 package com.bankmisr.MoneyTransfareApplication.ui.main
 
+import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -25,15 +30,19 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bankmisr.MoneyTransfareApplication.R
 import com.bankmisr.MoneyTransfareApplication.Routes.MainNavigation
 import com.bankmisr.MoneyTransfareApplication.models.BottomNavigationItem
 
+import androidx.compose.runtime.*
+import kotlinx.coroutines.delay
+
 @Composable
 fun MainScreen(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier//,onUserActivity: () -> Unit
 ) {
     
         MainNavigation()
@@ -121,3 +130,49 @@ fun MainNavigationBar(navController: NavController, modifier: Modifier = Modifie
         }
     }
 }
+
+/*
+@Composable
+fun InactivityHandler() {
+    var lastActivityTime by remember { mutableStateOf(System.currentTimeMillis()) }
+    var showDialog by remember { mutableStateOf(false) }
+
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(60000L) // 1 minute
+            val currentTime = System.currentTimeMillis()
+            if (currentTime - lastActivityTime > 1*1000L //30 * 60 * 1000L
+
+                ) { // 30 minutes
+                showDialog = true
+            }
+        }
+    }
+
+    // Call this function whenever there is user activity
+    fun updateLastActivityTime() {
+        lastActivityTime = System.currentTimeMillis()
+    }
+
+
+    MainScreen(onUserActivity = { updateLastActivityTime() })
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { /* Do nothing to force the user to take action */ },
+            title = { Text(text = "Session Timeout") },
+            text = { Text("You have been inactive for 30 minutes. Please log in again.") },
+            confirmButton = {
+                Button(onClick = {
+                    showDialog = false
+                    // Navigate to the login screen
+
+                }) {
+                    Text("OK")
+                }
+            }
+        )
+    }
+}
+*/
