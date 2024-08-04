@@ -13,4 +13,9 @@
     <string name="Cards">Cards"</string>
     <string name="services">Services"</string>
     <string name="Account">Account"</string>
+    <string name="TransferFrom">"Transfer From Website"</string>
+    <string name="Favourites">Favourites</string>
+    <string name="Profile">Profile"</string>
+    <string name="Help">Help"</string>
+    <string name="Logout">Logout"</string>
 </resources>

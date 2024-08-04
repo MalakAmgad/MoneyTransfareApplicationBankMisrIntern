@@ -7,10 +7,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,14 +17,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material.icons.sharp.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -45,7 +38,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -53,10 +45,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.collectAsState
@@ -65,23 +55,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.text.font.FontWeight.Companion.W400
 import androidx.compose.ui.text.font.FontWeight.Companion.W500
 import androidx.compose.ui.text.font.FontWeight.Companion.W600
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.bankmisr.MoneyTransfareApplication.R
-import com.bankmisr.MoneyTransfareApplication.Routes.Route.TRANSACTIONSDetails
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
-import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signUp2.CountrieslList
-import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signUp2.DataSource
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
-import com.bankmisr.MoneyTransfareApplication.ui.commonUI.bottomBar
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
+
 
  class Recipient() {
     companion object {
@@ -521,7 +502,9 @@ var amountUSD=1
                                             .padding(2.dp)
                                     )}
                                 val transactions by viewModel.getAllTransactions().collectAsState(initial = emptyList())
-                                LazyColumn(modifier = modifier.padding(top = 16.dp).weight(0.2f)) {
+                                LazyColumn(modifier = modifier
+                                    .padding(top = 16.dp)
+                                    .weight(0.2f)) {
                                     items(transactions.size) { index ->
                                         favouritListItem(
                                             transaction = transactions[index]
@@ -642,7 +625,9 @@ var amountUSD=1
                 }
             }}
 
-
+            item{
+                Spacer(modifier = Modifier.height(124.dp))
+            }
 
             }
     }
@@ -659,9 +644,10 @@ fun favouritListItem(transaction: Transaction, modifier: Modifier = Modifier//, 
         colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.p50)),
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 18.dp, vertical = 4.dp).clickable{
-                Recipient.RecipientName =transaction.receiver
-                Recipient.RecipientAccount =transaction.receiverAcount
+            .padding(horizontal = 18.dp, vertical = 4.dp)
+            .clickable {
+                Recipient.RecipientName = transaction.receiver
+                Recipient.RecipientAccount = transaction.receiverAcount
             }
     ) {
         Row(
