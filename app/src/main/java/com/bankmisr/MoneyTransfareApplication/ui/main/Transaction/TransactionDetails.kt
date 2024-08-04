@@ -61,7 +61,7 @@ import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun transactionDetails(transaction: Transaction?, modifier: Modifier = Modifier, navController: NavController) {
+fun TransactionDetailsScreen(transaction: Transaction?, modifier: Modifier = Modifier, navController: NavController) {
    // val t =transaction
     val t = Transaction(
         amount = 500.0f,
@@ -110,9 +110,6 @@ fun transactionDetails(transaction: Transaction?, modifier: Modifier = Modifier,
                     containerColor = colorResource(id = R.color.seashell)
                 )
             )
-        },
-        bottomBar = {
-            bottomBar(navController = navController, modifier = modifier, viewModel = viewModel())
         }
     ) { innerPadding ->
 

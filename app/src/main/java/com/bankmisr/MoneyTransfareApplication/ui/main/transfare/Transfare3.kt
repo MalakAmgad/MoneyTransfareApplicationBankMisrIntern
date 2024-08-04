@@ -73,7 +73,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun transfare3(transaction: Transaction?, modifier: Modifier = Modifier, navController: NavController) {
+fun TransferPaymentScreen(transaction: Transaction?, modifier: Modifier = Modifier, navController: NavController) {
     // val t =transaction
     val t = Transaction(
         amount = 500.0f,
@@ -123,9 +123,6 @@ fun transfare3(transaction: Transaction?, modifier: Modifier = Modifier, navCont
                 )
             )
         },
-        bottomBar = {
-            bottomBar(navController = navController, modifier = modifier, viewModel = viewModel())
-        }
     ) { innerPadding ->
 
         Column(

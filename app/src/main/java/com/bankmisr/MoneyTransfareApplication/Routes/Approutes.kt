@@ -24,7 +24,7 @@ import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signUp2.signUp2
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.signUp1
 import com.bankmisr.MoneyTransfareApplication.ui.main.Transaction.Transactions
 import com.bankmisr.MoneyTransfareApplication.ui.main.Transaction.transactionDetails
-import com.bankmisr.MoneyTransfareApplication.ui.notifications.Notifications
+import com.bankmisr.MoneyTransfareApplication.ui.main.home.notifications.Notifications
 import com.bankmisr.MoneyTransfareApplication.ui.main.transfare.Transfare1Screen
 import com.bankmisr.MoneyTransfareApplication.ui.main.transfare.TransferMainScreen
 

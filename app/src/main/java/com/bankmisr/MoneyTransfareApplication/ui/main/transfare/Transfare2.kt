@@ -62,7 +62,7 @@ import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Transfer2(transaction: Transaction?, modifier: Modifier = Modifier, navController: NavController) {
+fun TransferConfirmationScreen(transaction: Transaction?, modifier: Modifier = Modifier, navController: NavController) {
     // val t =transaction
     val t = Transaction(
         amount = 500.0f,
@@ -108,9 +108,6 @@ fun Transfer2(transaction: Transaction?, modifier: Modifier = Modifier, navContr
                 )
             )
         },
-        bottomBar = {
-            bottomBar(navController = navController, modifier = modifier, viewModel = viewModel())
-        }
     ) { innerPadding ->
 
         Column(

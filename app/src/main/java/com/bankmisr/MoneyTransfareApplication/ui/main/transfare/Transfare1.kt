@@ -92,7 +92,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Transfare1Screen(navController: NavController,
+fun TransferScreen(navController: NavController,
                  modifier: Modifier = Modifier,
                  viewModel: UserViewModel = viewModel()
 ) {
@@ -138,8 +138,7 @@ var amountUSD=1
                     containerColor = colorResource(id = R.color.seashell)
                 )
             )
-        }, bottomBar = { bottomBar(navController = navController, modifier = modifier, viewModel = viewModel())
-        }
+        },
 
     ) { innerPadding ->
         LazyColumn( // Replace Column with LazyColumn

@@ -1,4 +1,4 @@
-package com.bankmisr.MoneyTransfareApplication.ui.notifications
+package com.bankmisr.MoneyTransfareApplication.ui.main.home.notifications
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -54,7 +54,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Notifications(navController: NavController,
+fun NotificationScreen(navController: NavController,
                  modifier: Modifier = Modifier,
                  viewModel: UserViewModel = viewModel()
 ) {
@@ -91,8 +91,7 @@ fun Notifications(navController: NavController,
                     containerColor = colorResource(id = R.color.seashell)
                 )
             )
-        }, bottomBar = { bottomBar(navController = navController, modifier = modifier, viewModel = viewModel())
-        }
+        },
 
     ) { innerPadding ->
         Column(
@@ -121,10 +120,12 @@ fun Notifications(navController: NavController,
                 .weight(0.2f)) {
                 items(transactions.size) { index ->
                     if (transactions[index].status=="successful")
-                    {NotificationsListItem(transaction = transactions[index] )
+                    {
+                        NotificationsListItem(transaction = transactions[index] )
                     {
                         navController.navigate("$TRANSACTIONSDetails/${transactions}")
-                    }}
+                    }
+                    }
                 }
             }
         }

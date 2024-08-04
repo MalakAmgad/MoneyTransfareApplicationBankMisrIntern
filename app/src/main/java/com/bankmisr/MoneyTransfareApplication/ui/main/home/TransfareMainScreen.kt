@@ -1,4 +1,4 @@
-package com.bankmisr.MoneyTransfareApplication.ui.main.transfare
+package com.bankmisr.MoneyTransfareApplication.ui.main.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -31,14 +31,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.input.pointer.motionEventSpy
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -46,17 +41,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.W400
 import androidx.compose.ui.text.font.FontWeight.Companion.W500
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.R
-import com.bankmisr.MoneyTransfareApplication.Routes.Route.TRANSACTIONSDetails
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
-import com.bankmisr.MoneyTransfareApplication.ui.commonUI.bottomBar
-import java.security.Provider.Service
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -65,7 +56,7 @@ import java.util.Locale
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun TransferMainScreen(
+fun HomeScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
     viewModel: UserViewModel = viewModel()
@@ -86,7 +77,6 @@ fun TransferMainScreen(
     )
 
     Scaffold(
-        bottomBar = { bottomBar(navController = navController) }
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -429,6 +419,8 @@ fun RecentTransactions (image: Int,text:Int) {
         Text(text = stringResource(text))
     }
 }
+
+
 
 
 /*

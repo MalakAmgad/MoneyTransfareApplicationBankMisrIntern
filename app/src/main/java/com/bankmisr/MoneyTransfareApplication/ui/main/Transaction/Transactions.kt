@@ -71,7 +71,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Transactions(navController: NavController,
+fun TransactionsScreen(navController: NavController,
                  modifier: Modifier = Modifier,
                  viewModel: UserViewModel = viewModel()
 ) {
@@ -108,7 +108,7 @@ fun Transactions(navController: NavController,
                     containerColor = colorResource(id = R.color.seashell)
                 )
             )
-        }, bottomBar = { bottomBar(navController = navController, modifier = modifier, viewModel = viewModel())
+
         }
 
     ) { innerPadding ->
