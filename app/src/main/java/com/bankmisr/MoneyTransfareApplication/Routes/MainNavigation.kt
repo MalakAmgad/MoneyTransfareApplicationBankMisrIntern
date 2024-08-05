@@ -40,7 +40,10 @@ object MainRout {
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainNavigation(modifier: Modifier = Modifier) {
+fun MainNavigation(
+    modifier: Modifier = Modifier,
+    appNavController: NavController
+) {
 
     val navController = rememberNavController()
     Scaffold(
@@ -68,17 +71,23 @@ fun MainNavigation(modifier: Modifier = Modifier) {
             }
 
             composable(MainRout.MORE) {
-                MoreMainScreen(navController = navController)
+                MoreMainScreen(navController = navController, appNavController = appNavController)
             }
 
             composable("${MainRout.TRANSFARECONFIRMATION}/{transaction}") {
-                val transaction = it.arguments?.getParcelable<Transaction>("transaction", Transaction::class.java)//!!
-                TransferConfirmationScreen(transaction,navController = navController)
+                val transaction = it.arguments?.getParcelable<Transaction>(
+                    "transaction",
+                    Transaction::class.java
+                )//!!
+                TransferConfirmationScreen(transaction, navController = navController)
 
             }
             composable("${MainRout.TRANSFAREPAYMENT}/{transaction}") {
-                val transaction = it.arguments?.getParcelable<Transaction>("transaction", Transaction::class.java)//!!
-                TransferPaymentScreen(transaction,navController = navController)
+                val transaction = it.arguments?.getParcelable<Transaction>(
+                    "transaction",
+                    Transaction::class.java
+                )//!!
+                TransferPaymentScreen(transaction, navController = navController)
 
             }
 

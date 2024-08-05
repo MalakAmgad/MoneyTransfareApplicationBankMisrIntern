@@ -1,26 +1,17 @@
 package com.bankmisr.MoneyTransfareApplication.ui.main
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,33 +26,28 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.bankmisr.MoneyTransfareApplication.R
 import com.bankmisr.MoneyTransfareApplication.Routes.MainNavigation
 import com.bankmisr.MoneyTransfareApplication.models.BottomNavigationItem
-
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun MainScreen(
-    modifier: Modifier = Modifier//,onUserActivity: () -> Unit
+    modifier: Modifier = Modifier,//,onUserActivity: () -> Unit
+    appNavController: NavController
 ) {
-    val context= LocalContext.current
+    val context = LocalContext.current
     requestNotificationPermission(context)
-        MainNavigation()
+    MainNavigation(appNavController = appNavController)
 
 }
-
 
 
 fun requestNotificationPermission(context: Context) {
@@ -86,8 +72,6 @@ fun requestNotificationPermission(context: Context) {
 //private fun MainScreenPreview() {
 //    MainScreen(navController = rememberNavController())
 //}
-
-
 
 
 @Composable
