@@ -169,25 +169,22 @@ fun signInScreen (
         ) {
 
 
-            Column( verticalArrangement =Arrangement.Center , modifier = modifier.padding(top = 15.dp,bottom=25.dp) ){
+            Column( verticalArrangement =Arrangement.Center , modifier = modifier.padding(innerPadding) ){
                 Text(
                     text = "Speedo Transfer ",
                     color = colorResource(id = R.color.G900),
-                    fontSize = 24.sp,
+                    fontSize = 28.sp,
                     fontWeight = FontWeight.W600,
                     lineHeight = 29.05.sp,
                     textAlign = TextAlign.Center
                 )
             }
             Column(
-                modifier = Modifier
-                    .width(IntrinsicSize.Min).fillMaxSize()
-                    .height(IntrinsicSize.Max)
-                //  .padding(start = 16.dp, top = 242.dp)
-                , verticalArrangement =Arrangement.Center
+                modifier = Modifier.fillMaxSize()
+                  .padding( 16.dp)
+                , verticalArrangement = Arrangement.spacedBy(18.dp)
 
             ) {
-                Column() {
                     Text(
                         text = "Email",
                         modifier = Modifier.padding(top=5.dp),
@@ -202,9 +199,9 @@ fun signInScreen (
                     OutlinedTextField(
                         value = Email,
                         onValueChange = { Email=it },
-                        modifier = Modifier
-                            .width(343.dp)
-                            .height(54.dp)
+                        modifier = Modifier.fillMaxWidth()
+                        //    .width(343.dp)
+                        //    .height(54.dp)
                             .background(colorResource(id = R.color.white)),
                         placeholder= {
                             Text(
@@ -223,9 +220,9 @@ fun signInScreen (
                             )
                         }
                     )
-                }
+
                 //  Spacer(modifier = modifier.padding(5.dp))
-                Column() {
+
                     Text(
                         text = "Password",
                         modifier = Modifier.padding(top=5.dp),
@@ -241,9 +238,9 @@ fun signInScreen (
                         value = Password,
                         onValueChange = { Password=it },
                         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
-                        modifier = Modifier
-                            .width(343.dp)
-                            .height(54.dp)
+                        modifier = Modifier.fillMaxWidth()
+                            //    .width(343.dp)
+                            //    .height(54.dp)
                             .background(colorResource(id = R.color.white)),
                         placeholder = {
                             Text(
@@ -270,7 +267,7 @@ fun signInScreen (
 
                         }
                     )
-                }
+
                 //   Spacer(modifier = modifier.padding(5.dp))
                 Button(
                     onClick = { viewModel.loginUser(Email, Password)
@@ -340,10 +337,6 @@ fun signInScreen (
                 }
 
             }
-
-
-
-
 
         }
 

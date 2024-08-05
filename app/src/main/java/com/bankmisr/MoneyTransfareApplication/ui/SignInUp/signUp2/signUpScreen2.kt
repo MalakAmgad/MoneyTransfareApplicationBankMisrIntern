@@ -156,9 +156,9 @@ fun signUp2 (
         ) {
 
 
-            Column( verticalArrangement =Arrangement.Top, modifier = modifier
-                .weight(0.15f)
-                .padding(top = 30.dp) ){
+            Column( verticalArrangement =Arrangement.Center, modifier = modifier
+               // .weight(0.15f)
+                .padding(top = 40.dp,bottom = 30.dp) ){
                 Text(
                     text = "Speedo Transfer ",
                     color = colorResource(id = R.color.G900),
@@ -178,6 +178,8 @@ fun signUp2 (
                     textAlign = TextAlign.Center
                 )
             }
+
+
             Column( verticalArrangement =Arrangement.Top , modifier = modifier.padding(top=15.dp,bottom = 20.dp) ){
                 Text(
                     text = "Let’s Complete your Profile",
@@ -190,15 +192,12 @@ fun signUp2 (
             }
 
             Column(
-                modifier = Modifier
-                    .width(IntrinsicSize.Min)
-                    .height(IntrinsicSize.Max)
-                    .weight(0.5f)
-                //  .padding(start = 16.dp, top = 242.dp)
-                , verticalArrangement = Arrangement.spacedBy(10.dp)
+
+                modifier = Modifier.fillMaxSize()
+                    .padding( 16.dp)
+                , verticalArrangement = Arrangement.spacedBy(15.dp)
 
             ) {
-                Column() {
                     Text(
                         text = "Country",
                         modifier = Modifier.padding(top=5.dp),
@@ -213,9 +212,7 @@ fun signUp2 (
                     OutlinedTextField(
                         value = country,
                         onValueChange = { country = it },
-                        modifier = Modifier
-                            .width(343.dp)
-                            .height(54.dp)
+                        modifier = Modifier.fillMaxWidth()
                             .background(colorResource(id = R.color.white))
                             .clickable { showBottomSheet = true },
                         placeholder= {
@@ -265,10 +262,10 @@ fun signUp2 (
                                 Text("Hide bottom sheet")
                             }*/
                         }}
-                }
 
 
-                Column() {
+
+
                     Text(
                         text = "Date of Birth",
                         modifier = Modifier.padding(top=5.dp),
@@ -283,9 +280,7 @@ fun signUp2 (
                     OutlinedTextField(
                         value = dateOfBirth,
                         onValueChange = { dateOfBirth = it },
-                        modifier = Modifier
-                            .width(343.dp)
-                            .height(54.dp)
+                        modifier = Modifier.fillMaxWidth()
                             .background(colorResource(id = R.color.white))
                             .clickable { showDatePicker = true },
                         colors = OutlinedTextFieldDefaults.colors(
@@ -336,7 +331,7 @@ fun signUp2 (
                             day
                         ).show()
                     }
-                }
+
 
                 Button(
                     //enabled = country.isNotEmpty()&&dateOfBirth.isNotEmpty(),

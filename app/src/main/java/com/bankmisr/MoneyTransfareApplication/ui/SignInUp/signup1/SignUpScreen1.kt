@@ -142,25 +142,24 @@ fun signUp1 (
         ) {
 
 
-            Column( verticalArrangement =Arrangement.Center , modifier = modifier.padding(top = 15.dp,bottom=25.dp) ){
+            Column( verticalArrangement =Arrangement.Center , modifier = modifier.padding(top = 55.dp,bottom=25.dp) ){
                 Text(
                     text = "Speedo Transfer ",
                     color = colorResource(id = R.color.G900),
-                    fontSize = 24.sp,
+                    fontSize = 28.sp,
                     fontWeight = FontWeight.W600,
                     lineHeight = 29.05.sp,
                     textAlign = TextAlign.Center
                 )
             }
             Column(
-                modifier = Modifier
-                    .width(IntrinsicSize.Min)
-                    .height(IntrinsicSize.Max)
-                //  .padding(start = 16.dp, top = 242.dp)
-                , verticalArrangement = Arrangement.spacedBy(10.dp)
+
+                modifier = Modifier.fillMaxSize()
+                    .padding( 16.dp)
+                , verticalArrangement = Arrangement.spacedBy(18.dp)
 
             ) {
-                Column() {
+
                     Text(
                         text = "Full Name",
                         modifier = Modifier.padding(top=5.dp),
@@ -175,9 +174,7 @@ fun signUp1 (
                     OutlinedTextField(
                         value = FullName,
                         onValueChange = { FullName = it },
-                        modifier = Modifier
-                            .width(343.dp)
-                            .height(54.dp)
+                        modifier = Modifier.fillMaxWidth()
                             .background(colorResource(id = R.color.white)),
                         placeholder= {
                             Text(
@@ -196,9 +193,8 @@ fun signUp1 (
                             )
                         }
                     )
-                }
               //  Spacer(modifier = modifier.padding(5.dp))
-                Column() {
+
                     Text(
                         text = "Email",
                         modifier = Modifier.padding(top=5.dp),
@@ -213,9 +209,7 @@ fun signUp1 (
                     OutlinedTextField(
                         value = Email,
                         onValueChange = { Email = it },
-                        modifier = Modifier
-                            .width(343.dp)
-                            .height(54.dp)
+                        modifier = Modifier.fillMaxWidth()
                             .background(colorResource(id = R.color.white)),
                         placeholder= {
                             Text(
@@ -234,9 +228,9 @@ fun signUp1 (
                             )
                         }
                     )
-                }
+
               //  Spacer(modifier = modifier.padding(5.dp))
-                Column() {
+
                     Text(
                         text = "Password",
                         modifier = Modifier.padding(top=5.dp),
@@ -255,9 +249,7 @@ fun signUp1 (
                             passwordError = !isValidPassword(newPassword) },
                         isError = passwordError,
                         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
-                        modifier = Modifier
-                            .width(343.dp)
-                            .height(54.dp)
+                        modifier = Modifier.fillMaxWidth()
                             .background(colorResource(id = R.color.white)),
                         placeholder = {
                             Text(
@@ -287,7 +279,7 @@ fun signUp1 (
 
                         }
                     )
-                }
+
                 val isFullName =(FullName.contains(" "))
              //   Spacer(modifier = modifier.padding(5.dp))
                 Button(
