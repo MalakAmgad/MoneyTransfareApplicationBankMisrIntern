@@ -3,6 +3,7 @@ package com.bankmisr.MoneyTransfareApplication.Routes
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,9 +14,10 @@ import com.bankmisr.MoneyTransfareApplication.Routes.Route.SIGNIN
 import com.bankmisr.MoneyTransfareApplication.Routes.Route.SIGNUP
 import com.bankmisr.MoneyTransfareApplication.Routes.Route.SIGNUP2
 import com.bankmisr.MoneyTransfareApplication.Routes.Route.TRANSFARE1
-import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signIn.signInScreen
+import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signIn.SignInScreen
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signUp2.signUp2
-import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.signUp1
+import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.SignUp1
+import com.bankmisr.MoneyTransfareApplication.ui.main.IdleViewModel
 import com.bankmisr.MoneyTransfareApplication.ui.main.MainScreen
 object Route {
     const val SIGNIN = "SignUp"
@@ -38,8 +40,8 @@ object Route {
 fun ApppNavHost() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = SIGNIN) {
-        composable(route = SIGNIN) { signInScreen(navController = navController) }
-        composable(route = SIGNUP) { signUp1(navController = navController) }
+        composable(route = SIGNIN) { SignInScreen(navController = navController) }
+        composable(route = SIGNUP) { SignUp1(navController = navController) }
         // composable(route = SIGNUP2){ signUp2(navController = navController) }
 //        composable(route = TRANSACTIONS){ TransactionsScreen(navController = navController) }
 //        composable(route = NOTIFICATION){ NotificationScreen(navController = navController) }
@@ -55,7 +57,9 @@ fun ApppNavHost() {
 //
 //        }
         composable(MAIN_SCREEN) {
-            MainScreen(appNavController = navController)
+           var idleViewModel: IdleViewModel= viewModel()
+            MainScreen(appNavController = navController, idleViewModel = idleViewModel
+            )
         }
 
         composable(route = "$SIGNUP2/{fullname}/{email}/{password}",

@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -68,6 +69,7 @@ import com.bankmisr.MoneyTransfareApplication.database.user.User
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.bankmisr.MoneyTransfareApplication.Routes.MainRout
 import com.bankmisr.MoneyTransfareApplication.Routes.Route.MAIN_SCREEN
@@ -76,18 +78,18 @@ import com.bankmisr.MoneyTransfareApplication.ui.theme.MoneyTransfareApplication
 
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
-fun signInScreen (
-   // email:String?,password:String?,
+fun SignInScreen (
+    // email:String?,password:String?,
     navController: NavController,
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = viewModel()
 
 ) {
 
-  //  val users by viewModel.getNotes().collectAsState(initial = emptyList())
-  //  val userDefault =users.last()
+    //  val users by viewModel.getNotes().collectAsState(initial = emptyList())
+    //  val userDefault =users.last()
     var checkBoxState by remember { mutableStateOf(true) }
     val context = LocalContext.current
     val prefs = context.getSharedPreferences("user_data", Context.MODE_PRIVATE)
@@ -101,22 +103,7 @@ fun signInScreen (
     var passwordVisible = remember { mutableStateOf(false) }
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Sign In",
-                        color = colorResource(id = R.color.G900),
-                        modifier = Modifier.fillMaxWidth(),
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.W500,
-                        lineHeight = 30.sp,
-                        textAlign = TextAlign.Center
-                    )
-                }
-            )
-        }
-        , bottomBar = {
+        bottomBar = {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -166,13 +153,25 @@ fun signInScreen (
 
 
             Column( verticalArrangement =Arrangement.Center , modifier = modifier.padding(innerPadding) ){
+                Spacer(modifier = Modifier.height(32.dp))
                 Text(
-                    text = "Speedo Transfer ",
+                    text = "Sign In",
+                    color = colorResource(id = R.color.G900),
+                    modifier = Modifier.fillMaxWidth(),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.W500,
+                    lineHeight = 30.sp,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier.height(56.dp))
+                Text(
+                    text = "Speedo Transfer",
                     color = colorResource(id = R.color.G900),
                     fontSize = 28.sp,
                     fontWeight = FontWeight.W600,
                     lineHeight = 29.05.sp,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             }
             Column(
@@ -182,96 +181,111 @@ fun signInScreen (
                 , verticalArrangement = Arrangement.spacedBy(18.dp)
 
             ) {
-                    Text(
-                        text = "Email",
-                        modifier = Modifier.padding(top=5.dp),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.W400,
-                        lineHeight = 24.sp,
-                        textAlign = TextAlign.Left,
-                        color = colorResource(id = R.color.G700)
-                    )
+                Text(
+                    text = "Email",
+                    modifier = Modifier.padding(top=5.dp),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.W400,
+                    lineHeight = 24.sp,
+                    textAlign = TextAlign.Left,
+                    color = colorResource(id = R.color.G700)
+                )
 
 
-                    OutlinedTextField(
-                        value = Email,
-                        onValueChange = { Email=it },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            //    .width(343.dp)
-                            //    .height(54.dp)
-                            .background(colorResource(id = R.color.white)),
-                        placeholder= {
-                            Text(
-                                "Enter your Full Name",
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.W400,
-                                lineHeight = 21.sp,
-                                color = colorResource(id = R.color.G70)
-                            )
-                        },
-                        trailingIcon = {
-                            Icon(
-                                painter = painterResource(id = R.drawable.email_1),
-                                contentDescription = "User Icon",
-                                tint = colorResource(id = R.color.G70)
-                            )
-                        }
-                    )
+                OutlinedTextField(
+                    value = Email,
+                    onValueChange = { Email=it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        //    .width(343.dp)
+                        //    .height(54.dp)
+                        .background(colorResource(id = R.color.white)),
+                    placeholder= {
+                        Text(
+                            "Enter your Full Name",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.W400,
+                            lineHeight = 21.sp,
+                            color = colorResource(id = R.color.G70)
+                        )
+                    },
+                    trailingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.email_1),
+                            contentDescription = "User Icon",
+                            tint = colorResource(id = R.color.G70)
+                        )
+                    }
+                )
 
                 //  Spacer(modifier = modifier.padding(5.dp))
 
-                    Text(
-                        text = "Password",
-                        modifier = Modifier.padding(top=5.dp),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.W400,
-                        lineHeight = 24.sp,
-                        textAlign = TextAlign.Left,
-                        color = colorResource(id = R.color.G700)
-                    )
+                Text(
+                    text = "Password",
+                    modifier = Modifier.padding(top=5.dp),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.W400,
+                    lineHeight = 24.sp,
+                    textAlign = TextAlign.Left,
+                    color = colorResource(id = R.color.G700)
+                )
 
 
-                    OutlinedTextField(
-                        value = Password,
-                        onValueChange = { Password=it },
-                        visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            //    .width(343.dp)
-                            //    .height(54.dp)
-                            .background(colorResource(id = R.color.white)),
-                        placeholder = {
-                            Text(
-                                "Enter your Password",
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.W400,
-                                lineHeight = 21.sp,
-                                color = colorResource(id = R.color.G70)
-                            )
-                        },
-                        trailingIcon = {
-                            val image = if (passwordVisible.value) {
-                                painterResource(id = R.drawable.open_eye)
-                            } else {
-                                painterResource(id = R.drawable.close_eye)
-                            }
-                            Icon(
-                                painter = image,
-                                contentDescription = if (passwordVisible.value) "Hide password" else "Show password",
-                                tint = colorResource(id = R.color.G70),
-                                modifier = Modifier.clickable {
-                                    passwordVisible.value = !passwordVisible.value}
-                            )
-
+                OutlinedTextField(
+                    value = Password,
+                    onValueChange = { Password=it },
+                    visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        //    .width(343.dp)
+                        //    .height(54.dp)
+                        .background(colorResource(id = R.color.white)),
+                    placeholder = {
+                        Text(
+                            "Enter your Password",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.W400,
+                            lineHeight = 21.sp,
+                            color = colorResource(id = R.color.G70)
+                        )
+                    },
+                    trailingIcon = {
+                        val image = if (passwordVisible.value) {
+                            painterResource(id = R.drawable.close_eye)
+                        } else {
+                            painterResource(id = R.drawable.open_eye)
                         }
+                        Icon(
+                            painter = image,
+                            contentDescription = if (passwordVisible.value) "Hide password" else "Show password",
+                            tint = colorResource(id = R.color.G70),
+                            modifier = Modifier.clickable {
+                                passwordVisible.value = !passwordVisible.value}
+                        )
+
+                    }
+                )
+
+                Row(
+                    modifier=modifier.fillMaxWidth() ,verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    val checkboxColors: CheckboxColors = CheckboxDefaults.colors(
+                        checkedColor = colorResource(id = R.color.p300), // Use your color here
+                        // Customize other states as needed (uncheckedColor, disabledColor, etc.)
                     )
+                    Text(text = "Remember me next Time",color = colorResource(id = R.color.G100))
+                    Checkbox(
+                        checked = checkBoxState,
+                        onCheckedChange = { checkBoxState = it }, colors = checkboxColors
+                    )
+                }
 
                 //   Spacer(modifier = modifier.padding(5.dp))
                 Button(
                     onClick = { viewModel.loginUser(Email, Password)
                         //      if(viewModel.success){
-                                  navController.navigate(MAIN_SCREEN)
+                        navController.navigate(MAIN_SCREEN)
                         //      }
                         //else{ Toast.makeText(context, "Wrong login or password ", Toast.LENGTH_SHORT).show();  }
                         saveCredentials(Email, Password, checkBoxState, context)
@@ -336,20 +350,7 @@ fun signInScreen (
 
                 }
 
-                Row(
-                    modifier=modifier.fillMaxWidth() ,verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    val checkboxColors: CheckboxColors = CheckboxDefaults.colors(
-                        checkedColor = colorResource(id = R.color.p300), // Use your color here
-                        // Customize other states as needed (uncheckedColor, disabledColor, etc.)
-                    )
-                    Text(text = "Remember me next Time",color = colorResource(id = R.color.G100))
-                    Checkbox(
-                        checked = checkBoxState,
-                        onCheckedChange = { checkBoxState = it }, colors = checkboxColors
-                    )
-                }
+
 
 
             }
@@ -372,10 +373,10 @@ fun saveCredentials(email: String, pass: String, cbState: Boolean, context: Cont
     editor.apply()
 }
 
-/*
+
 
 @Preview
 @Composable
 private fun signInPreview() {
-    signIn()
-}*/
+    SignInScreen(rememberNavController())
+}

@@ -18,13 +18,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
 import com.bankmisr.MoneyTransfareApplication.Routes.ApppNavHost
 import com.bankmisr.MoneyTransfareApplication.Routes.MainNavigation
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.SpeedoTransfare.SpeedoTransfare
+import com.bankmisr.MoneyTransfareApplication.ui.main.IdleViewModel
 import com.bankmisr.MoneyTransfareApplication.ui.main.MainScreen
 import com.bankmisr.MoneyTransfareApplication.ui.theme.MoneyTransfareApplicationTheme
 
 class MainActivity : ComponentActivity() {
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

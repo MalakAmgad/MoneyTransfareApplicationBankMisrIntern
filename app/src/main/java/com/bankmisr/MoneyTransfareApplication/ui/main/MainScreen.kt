@@ -7,7 +7,13 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonDefaults.buttonColors
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -33,22 +39,72 @@ import com.bankmisr.MoneyTransfareApplication.R
 import com.bankmisr.MoneyTransfareApplication.Routes.MainNavigation
 import com.bankmisr.MoneyTransfareApplication.models.BottomNavigationItem
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bankmisr.MoneyTransfareApplication.Routes.Route
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,//,onUserActivity: () -> Unit
-    appNavController: NavController
+    appNavController: NavController,idleViewModel: IdleViewModel
 ) {
     val context = LocalContext.current
     requestNotificationPermission(context)
     MainNavigation(appNavController = appNavController)
 
+    val isIdle by idleViewModel.isIdle
+
+    LaunchedEffect(Unit) {
+        idleViewModel.resetIdleTimer()
+    }
+
+    // Show AlertDialog when idle
+    if (isIdle) {
+        IdleAlertDialog(onDismiss = {
+            idleViewModel.resetIdleTimer()
+        }) {
+            // Log out the user
+            appNavController.navigate(Route.SIGNIN)
+        }
+    }
+
+    // Reset idle timer on interaction
+    DisposableEffect(Unit) {
+        val callback = {
+            idleViewModel.resetIdleTimer()
+        }
+
+        val view = context as? Activity
+        view?.window?.decorView?.setOnTouchListener { _, _ ->
+            callback()
+            false
+        }
+
+        onDispose {
+            view?.window?.decorView?.setOnTouchListener(null)
+        }
+    }
+
+
 }
 
+
+@Composable
+fun IdleAlertDialog(onDismiss: () -> Unit, onLogout: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Session Timeout") },
+        text = { Text("You have been idle for 30 minutes. Please log in again.") },
+        confirmButton = {
+            Button(onClick = onLogout, colors = ButtonDefaults.buttonColors( containerColor = colorResource(id = R.color.p300)) ) {
+                Text("OK")
+            }
+        }
+    )
+}
 
 fun requestNotificationPermission(context: Context) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

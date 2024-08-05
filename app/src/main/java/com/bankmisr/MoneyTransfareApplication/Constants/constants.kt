@@ -1,7 +1,8 @@
 package com.bankmisr.MoneyTransfareApplication.Constants
 
 object Constants {
-    const val BASE_URL = "http://localhost:8080"
+
+    const val BASE_URL = " https://fde5-154-176-91-52.ngrok-free.app" //"http://localhost:8080"
 
     // Register API
     const val REGISTER_ENDPOINT = "/api/register"

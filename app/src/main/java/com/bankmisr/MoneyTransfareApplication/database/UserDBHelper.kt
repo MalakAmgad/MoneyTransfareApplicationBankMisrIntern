@@ -22,7 +22,6 @@ abstract class UserDBHelper:RoomDatabase() {
         fun getInstance(c: Context):UserDBHelper{
             return INSTANCE?: synchronized(this){
                 var instance = Room.databaseBuilder(c,UserDBHelper::class.java,"MyDB")
-                    //.fallbackToDestructiveMigration() // Add this line
                     .build()
                 INSTANCE=instance
                 instance
