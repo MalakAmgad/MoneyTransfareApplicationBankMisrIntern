@@ -274,7 +274,7 @@ fun signUp1 (
                                     passwordVisible.value = !passwordVisible.value}
                             )
                             if (passwordError) {
-                                Toast.makeText(context, " Password must contain at least one lowercase and one uppercase letter.", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, " Password must contain at least one lowercase and one uppercase letter and special charcter.", Toast.LENGTH_SHORT).show()
                             }
 
                         }
@@ -371,7 +371,9 @@ fun saveCredentials(email: String, pass: String, context: Context) {
 }
 
 fun isValidPassword(password: String): Boolean {
-    return password.any { it.isLowerCase() } && password.any { it.isUpperCase() }&&password.any{it.isDigit()}
+    return password.any { it.isLowerCase() } &&
+            password.any { it.isUpperCase() } &&
+            Regex("[^A-Za-z0-9]").containsMatchIn(password)
 }
 
 /*
