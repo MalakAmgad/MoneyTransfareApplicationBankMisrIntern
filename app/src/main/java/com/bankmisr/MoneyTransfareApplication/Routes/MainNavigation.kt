@@ -80,7 +80,7 @@ fun MainNavigation(
                 val transaction = it.arguments?.getParcelable<Transaction>(
                     "transaction",
                     Transaction::class.java
-                )//!!
+                )!!
                 TransferConfirmationScreen(transaction, navController = navController)
 
             }
@@ -92,7 +92,7 @@ fun MainNavigation(
                 val transaction = it.arguments?.getParcelable<Transaction>(
                     "transaction",
                     Transaction::class.java
-                )//!!
+                )!!
                 TransactionDetailsScreen(transaction, navController = navController)
             }
 
