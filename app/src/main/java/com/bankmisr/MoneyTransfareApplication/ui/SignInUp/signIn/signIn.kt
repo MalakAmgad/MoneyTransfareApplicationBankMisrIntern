@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,6 +26,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxColors
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -181,8 +185,9 @@ fun signInScreen (
                 )
             }
             Column(
-                modifier = Modifier.fillMaxSize()
-                  .padding( 16.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
                 , verticalArrangement = Arrangement.spacedBy(18.dp)
 
             ) {
@@ -200,9 +205,10 @@ fun signInScreen (
                     OutlinedTextField(
                         value = Email,
                         onValueChange = { Email=it },
-                        modifier = Modifier.fillMaxWidth()
-                        //    .width(343.dp)
-                        //    .height(54.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            //    .width(343.dp)
+                            //    .height(54.dp)
                             .background(colorResource(id = R.color.white)),
                         placeholder= {
                             Text(
@@ -239,7 +245,8 @@ fun signInScreen (
                         value = Password,
                         onValueChange = { Password=it },
                         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             //    .width(343.dp)
                             //    .height(54.dp)
                             .background(colorResource(id = R.color.white)),
@@ -276,7 +283,8 @@ fun signInScreen (
                                   navController.navigate(MAIN_SCREEN)
                         //      }
                         //else{ Toast.makeText(context, "Wrong login or password ", Toast.LENGTH_SHORT).show();  }
-                              }
+                        saveCredentials(Email, Password, checkBoxState, context)
+                    }
                     ,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -337,6 +345,22 @@ fun signInScreen (
 
                 }
 
+                Row(
+                    modifier=modifier.fillMaxWidth() ,verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    val checkboxColors: CheckboxColors = CheckboxDefaults.colors(
+                        checkedColor = colorResource(id = R.color.p300), // Use your color here
+                        // Customize other states as needed (uncheckedColor, disabledColor, etc.)
+                    )
+                    Text(text = "Remember me next Time",color = colorResource(id = R.color.G100))
+                    Checkbox(
+                        checked = checkBoxState,
+                        onCheckedChange = { checkBoxState = it }, colors = checkboxColors
+                    )
+                }
+
+
             }
 
         }
@@ -345,7 +369,17 @@ fun signInScreen (
 }
 
 
-
+fun saveCredentials(email: String, pass: String, cbState: Boolean, context: Context) {
+    val editor = context.getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
+    if (cbState) {
+        editor.putString("email", email)
+        editor.putString("password", pass)
+    } else {
+        editor.putString("email", "")
+        editor.putString("password", "")
+    }
+    editor.apply()
+}
 
 /*
 

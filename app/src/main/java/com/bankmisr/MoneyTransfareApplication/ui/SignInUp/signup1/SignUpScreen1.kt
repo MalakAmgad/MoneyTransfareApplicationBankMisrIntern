@@ -287,7 +287,7 @@ fun signUp1 (
                     onClick = {
                        // viewModel.upsert(User(fullName = FullName,email = Email,password = Password))
                         //FullName,Email,Password,SIGNUP2
-                        saveCredentials(Email, Password, context)
+                       // saveCredentials(Email, Password, context)
                         navController.navigate("$SIGNUP2/${FullName}/${Email}/${Password}")
                     },
                     modifier = Modifier
@@ -361,14 +361,7 @@ fun signUp1 (
     }
 
 
-fun saveCredentials(email: String, pass: String, context: Context) {
-    val editor = context.getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
 
-    editor.putString("email", email)
-    editor.putString("password", pass)
-
-    editor.apply()
-}
 
 fun isValidPassword(password: String): Boolean {
     return password.any { it.isLowerCase() } &&
