@@ -46,8 +46,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.R
+import com.bankmisr.MoneyTransfareApplication.Routes.MainRout.NOTIFICATION
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
+import com.bankmisr.MoneyTransfareApplication.ui.main.home.notifications.NotificationScreen
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -88,7 +90,7 @@ fun HomeScreen(
 
                 )
         ) {
-            WelcomeTitle(userName,firstname,lastname)
+            WelcomeTitle(userName,firstname,lastname,navController)
             CurrentBalanceCard(balance)
             ServicesCard()
             Row(modifier = modifier.padding(horizontal = 10.dp)) {
@@ -151,7 +153,8 @@ fun HomeScreen(
 fun RecentTransactionsListItem(transaction: Transaction, modifier: Modifier = Modifier//, onNavigate: () -> Unit
 ) {
     Row(modifier = modifier
-        .fillMaxWidth().background(color = Color.White)
+        .fillMaxWidth()
+        .background(color = Color.White)
         //.height(77.dp)
        // .padding(bottom = 5.dp)
         )
@@ -259,7 +262,7 @@ fun RecentTransactionsListItem(transaction: Transaction, modifier: Modifier = Mo
 
 }
 @Composable
-fun WelcomeTitle(userName: String,firstname:String ,lastname:String) {
+fun WelcomeTitle(userName: String,firstname:String ,lastname:String ,navController: NavController) {
     val initials: String = "${firstname.firstOrNull() ?: ""}${lastname.firstOrNull() ?: ""}"
     Row(
         modifier = Modifier
@@ -273,7 +276,8 @@ fun WelcomeTitle(userName: String,firstname:String ,lastname:String) {
 
             Box(
                 modifier = Modifier
-                    .size(64.dp).padding(10.dp)
+                    .size(64.dp)
+                    .padding(10.dp)
                     .background(color = colorResource(id = R.color.G40), shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
@@ -293,7 +297,9 @@ fun WelcomeTitle(userName: String,firstname:String ,lastname:String) {
             contentDescription = stringResource(
                 id = R.string.Photo
             ),
-            Modifier.size(40.dp)
+            Modifier
+                .size(40.dp)
+                .clickable { navController.navigate(NOTIFICATION) }
         )
     }
 }
@@ -386,7 +392,8 @@ fun ServicesImage(image: Int,text:Int) {
             colorFilter = ColorFilter.tint(colorResource(id = R.color.yellow)),
             contentDescription = stringResource(id = R.string.Photo),
             modifier= Modifier
-                .width(40.dp).padding(bottom = 10.dp)
+                .width(40.dp)
+                .padding(bottom = 10.dp)
             // .height(60.dp)
         )
         Text(

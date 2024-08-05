@@ -16,6 +16,7 @@ import com.bankmisr.MoneyTransfareApplication.database.Transaction
 import com.bankmisr.MoneyTransfareApplication.ui.main.MainNavigationBar
 import com.bankmisr.MoneyTransfareApplication.ui.main.Transaction.TransactionsScreen
 import com.bankmisr.MoneyTransfareApplication.ui.main.home.HomeScreen
+import com.bankmisr.MoneyTransfareApplication.ui.main.home.notifications.NotificationScreen
 import com.bankmisr.MoneyTransfareApplication.ui.main.myCards.MyCardsScreen
 import com.bankmisr.MoneyTransfareApplication.ui.main.transfare.TransferConfirmationScreen
 import com.bankmisr.MoneyTransfareApplication.ui.main.transfare.TransferPaymentScreen
@@ -88,7 +89,9 @@ fun MainNavigation(
                     Transaction::class.java
                 )//!!
                 TransferPaymentScreen(transaction, navController = navController)
-
+            }
+            composable(MainRout.NOTIFICATION) {
+                NotificationScreen(navController = navController)
             }
 
         }

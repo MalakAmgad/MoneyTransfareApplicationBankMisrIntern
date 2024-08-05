@@ -35,12 +35,14 @@ object Constants {
     // Transactions API
     const val TRANSFER_ENDPOINT = "/api/transactions/transfer"
     const val TRANSACTIONS_ENDPOINT = "/api/transactions"
-    const val TRANSACTION_SPECIFIC_ENDPOINT = "/api/transactions/{id}"
+
+    /*const val TRANSACTION_SPECIFIC_ENDPOINT = "/api/transactions/{id}"
     const val TRANSACTIONS_ACCOUNT_ENDPOINT = "/api/transactions/account/{accountId}"
     const val TRANSFER_SOURCE_ACCOUNT_ID = "sourceAccountId"
     const val TRANSFER_DESTINATION_ACCOUNT_ID = "destinationAccountId"
     const val TRANSFER_AMOUNT = "amount"
     const val TRANSFER_TRANSACTION_TYPE = "transactionType"
+     */
 
     // Favorite Recipient API
     const val FAVORITES_ENDPOINT = "/api/favorites/{customerId}/{recipientId}"
