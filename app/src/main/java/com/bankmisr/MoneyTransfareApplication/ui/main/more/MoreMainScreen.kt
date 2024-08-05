@@ -17,7 +17,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -65,6 +68,8 @@ fun MoreMainScreen(
         showBottomSheet = true
     }
 
+    var openAlertDialog by remember { mutableStateOf(false) }
+
     fun onClickLogout() {
 
     }
@@ -90,12 +95,41 @@ fun MoreMainScreen(
             onChevronClick = ::onClickHelp
         )
         MoreListItem(R.string.Logout, R.drawable.logout_1, false, onChevronClick = {
-            appNavController.navigate(SIGNIN){
-                popUpTo(0) { inclusive = true }
-                launchSingleTop = true
-            }
+            openAlertDialog = true
         })
     }
+
+    if (openAlertDialog) {
+        AlertDialog(
+            onDismissRequest = { openAlertDialog = false },
+            title = { Text(text = stringResource(id = R.string.Logout))},
+            confirmButton = {
+                Button(
+                    onClick = {
+                        appNavController.navigate(SIGNIN) {
+                            popUpTo(0) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.p300))
+                ) {
+                    Text(text = stringResource(id = R.string.Logout))
+                }
+
+            },
+            dismissButton = {
+                Button(
+                    onClick = { openAlertDialog = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.p300))
+                ) {
+                    Text(text = stringResource(R.string.dismiss))
+                }
+            }
+
+        )
+    }
+
+
 
     if (showBottomSheet) {
         Surface(
@@ -294,5 +328,8 @@ fun MoreListItem(
 @Composable
 @Preview
 fun MoreMainScreenPreview() {
-    MoreMainScreen(navController = rememberNavController(), appNavController = rememberNavController())
+    MoreMainScreen(
+        navController = rememberNavController(),
+        appNavController = rememberNavController()
+    )
 }
