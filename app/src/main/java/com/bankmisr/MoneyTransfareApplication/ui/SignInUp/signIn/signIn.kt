@@ -94,19 +94,10 @@ fun signInScreen (
     val userEmail  = prefs.getString("email", "")!!
     val userPassword = prefs.getString("password", "")!!
 
-   // val userDefault: User? = viewModel.getLastUser()
-
-   // val userEmail = remember(userDefault){ userDefault?.email ?: "" }
-   // val userPassword = remember(userDefault) { userDefault?.password ?: "" }
     var Email by remember { mutableStateOf(userEmail) }
     var Password by remember { mutableStateOf(userPassword) }
 
     Log.d("trace", "signInScreen: $Email $Password")
-/*
-    var Email by remember { mutableStateOf("") }
-    var Password by remember { mutableStateOf("") }
-*/
-
     var passwordVisible = remember { mutableStateOf(false) }
 
     Scaffold(
