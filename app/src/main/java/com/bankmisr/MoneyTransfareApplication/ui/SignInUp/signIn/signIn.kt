@@ -84,6 +84,7 @@ fun signInScreen (
 
   //  val users by viewModel.getNotes().collectAsState(initial = emptyList())
   //  val userDefault =users.last()
+    var checkBoxState by remember { mutableStateOf(true) }
     val context = LocalContext.current
     val prefs = context.getSharedPreferences("user_data", Context.MODE_PRIVATE)
     val userEmail  = prefs.getString("email", "")!!

@@ -14,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
 import com.bankmisr.MoneyTransfareApplication.ui.main.MainNavigationBar
+import com.bankmisr.MoneyTransfareApplication.ui.main.Transaction.TransactionDetailsScreen
 import com.bankmisr.MoneyTransfareApplication.ui.main.Transaction.TransactionsScreen
 import com.bankmisr.MoneyTransfareApplication.ui.main.home.HomeScreen
 import com.bankmisr.MoneyTransfareApplication.ui.main.home.notifications.NotificationScreen
@@ -83,15 +84,16 @@ fun MainNavigation(
                 TransferConfirmationScreen(transaction, navController = navController)
 
             }
-            composable("${MainRout.TRANSFAREPAYMENT}/{transaction}") {
+
+            composable(MainRout.NOTIFICATION) {
+                NotificationScreen(navController = navController)
+            }
+            composable("${MainRout.TRANSACTIONSDetails}/{transaction}") {
                 val transaction = it.arguments?.getParcelable<Transaction>(
                     "transaction",
                     Transaction::class.java
                 )//!!
-                TransferPaymentScreen(transaction, navController = navController)
-            }
-            composable(MainRout.NOTIFICATION) {
-                NotificationScreen(navController = navController)
+                TransactionDetailsScreen(transaction, navController = navController)
             }
 
         }

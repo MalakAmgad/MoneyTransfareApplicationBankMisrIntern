@@ -1,6 +1,7 @@
 package com.bankmisr.MoneyTransfareApplication.apis.Transaction
 
 import com.bankmisr.MoneyTransfareApplication.Constants.Constants
+import com.bankmisr.MoneyTransfareApplication.models.Account
 import com.bankmisr.MoneyTransfareApplication.models.Transaction
 import com.bankmisr.MoneyTransfareApplication.models.TransferRequest
 import retrofit2.Response
@@ -13,7 +14,10 @@ import retrofit2.http.Path
 interface TransactionAPICallable {
     @POST(Constants.TRANSFER_ENDPOINT)
     suspend fun transferMoney(@Body transferRequest: TransferRequest): Response<Transaction>
-
+/*
+    @GET("${Constants.TRANSACTIONS_ENDPOINT}/account/{accountId}")
+    suspend fun getAccountDetails(@Path("accountId") accountId: Int): Response<Account>
+*/
     @GET(Constants.TRANSACTIONS_ENDPOINT)
     suspend fun getAllTransactions(): Response<List<Transaction>>
 

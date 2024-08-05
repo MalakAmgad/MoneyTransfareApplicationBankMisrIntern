@@ -49,6 +49,7 @@ import com.bankmisr.MoneyTransfareApplication.R
 import com.bankmisr.MoneyTransfareApplication.Routes.MainRout.NOTIFICATION
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
+import com.bankmisr.MoneyTransfareApplication.ui.main.Transaction.TransactionViewModel
 import com.bankmisr.MoneyTransfareApplication.ui.main.home.notifications.NotificationScreen
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -262,7 +263,7 @@ fun RecentTransactionsListItem(transaction: Transaction, modifier: Modifier = Mo
 
 }
 @Composable
-fun WelcomeTitle(userName: String,firstname:String ,lastname:String ,navController: NavController) {
+fun WelcomeTitle(userName: String,firstname:String ,lastname:String ,navController: NavController,viewModel: TransactionViewModel= androidx.lifecycle.viewmodel.compose.viewModel()) {
     val initials: String = "${firstname.firstOrNull() ?: ""}${lastname.firstOrNull() ?: ""}"
     Row(
         modifier = Modifier

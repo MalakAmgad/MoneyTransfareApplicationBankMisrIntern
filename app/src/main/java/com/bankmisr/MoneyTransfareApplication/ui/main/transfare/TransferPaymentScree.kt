@@ -76,22 +76,8 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TransferPaymentScreen(transaction: Transaction?, modifier: Modifier = Modifier, navController: NavController) {
+fun TransferPaymentScreen(t: Transaction, modifier: Modifier = Modifier, navController: NavController) {
     // val t =transaction
-    val t = Transaction(
-        amount = 500.0f,
-        sender = "Alice",
-        SenderAcount = "12345",
-        receiver = "Bob",
-        receiverAcount = "98765",
-        reference = "REF54321",
-        date = Date().time,
-        status = "Successful"
-    )
-
-
-
-
 
     Scaffold(
         topBar = {

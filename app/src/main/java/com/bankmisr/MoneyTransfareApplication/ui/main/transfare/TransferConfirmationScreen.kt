@@ -89,18 +89,8 @@ import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TransferConfirmationScreen(transaction: Transaction?, modifier: Modifier = Modifier, navController: NavController) {
-    // val t =transaction
-    val t = Transaction(
-        amount = 500.0f,
-        sender = "Alice",
-        SenderAcount = "12345",
-        receiver = "Bob",
-        receiverAcount = "98765",
-        reference = "REF54321",
-        date = Date().time,
-        status = "Successful"
-    )
+fun TransferConfirmationScreen(t: Transaction, modifier: Modifier = Modifier, navController: NavController) {
+
 
     Scaffold(
         topBar = {
