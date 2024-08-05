@@ -47,11 +47,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bankmisr.MoneyTransfareApplication.R
+import com.bankmisr.MoneyTransfareApplication.Routes.Route.SIGNIN
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MoreMainScreen(navController: NavController) {
+fun MoreMainScreen(
+    navController: NavController,
+    appNavController: NavController
+) {
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -60,8 +64,9 @@ fun MoreMainScreen(navController: NavController) {
     fun onClickHelp() {
         showBottomSheet = true
     }
-    fun onClickLogout(){
-        
+
+    fun onClickLogout() {
+
     }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -84,7 +89,12 @@ fun MoreMainScreen(navController: NavController) {
             showDivider = true,
             onChevronClick = ::onClickHelp
         )
-        MoreListItem(R.string.Logout, R.drawable.logout_1, false)
+        MoreListItem(R.string.Logout, R.drawable.logout_1, false, onChevronClick = {
+            appNavController.navigate(SIGNIN){
+                popUpTo(0) { inclusive = true }
+                launchSingleTop = true
+            }
+        })
     }
 
     if (showBottomSheet) {
@@ -240,7 +250,8 @@ fun MoreListItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp),
+            .height(56.dp)
+            .clickable { onChevronClick?.invoke() },
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -283,5 +294,5 @@ fun MoreListItem(
 @Composable
 @Preview
 fun MoreMainScreenPreview() {
-    MoreMainScreen(navController = rememberNavController())
+    MoreMainScreen(navController = rememberNavController(), appNavController = rememberNavController())
 }

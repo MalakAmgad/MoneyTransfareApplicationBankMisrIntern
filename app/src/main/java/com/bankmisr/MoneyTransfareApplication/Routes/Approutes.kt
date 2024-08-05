@@ -55,7 +55,7 @@ fun ApppNavHost() {
 //
 //        }
         composable(MAIN_SCREEN) {
-            MainScreen()
+            MainScreen(appNavController = navController)
         }
 
         composable(route = "$SIGNUP2/{fullname}/{email}/{password}",
