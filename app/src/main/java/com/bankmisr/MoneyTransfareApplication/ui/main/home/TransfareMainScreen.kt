@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -98,6 +99,7 @@ fun HomeScreen(
                 )
         ) {
             WelcomeTitle(userName,firstname,lastname,navController)
+            Spacer(modifier =modifier.height(20.dp))
             CurrentBalanceCard(balance)
             ServicesCard()
             Row(modifier = modifier.padding(horizontal = 10.dp)) {
@@ -140,7 +142,9 @@ fun HomeScreen(
                     .padding(top = 16.dp)
                     .weight(0.2f)){
                     items(transactions) { transaction ->  // Iterate directly over the limited list
-                        RecentTransactionsListItem(transaction = transaction) /*{
+                        RecentTransactionsListItem(transaction = transaction)
+                        Spacer(modifier =modifier.height(10.dp))
+                        /*{
                             navController.navigate("$TRANSACTIONSDetails/${transaction}")
                         }*/
                     }
@@ -162,7 +166,7 @@ fun RecentTransactionsListItem(transaction: Transaction, modifier: Modifier = Mo
     Row(modifier = modifier
         .fillMaxWidth()
         .background(color = Color.White)
-        //.height(77.dp)
+        .height(90.dp)
        // .padding(bottom = 5.dp)
         )
     {
@@ -171,7 +175,7 @@ fun RecentTransactionsListItem(transaction: Transaction, modifier: Modifier = Mo
         //val transactionDate = dateFormat.parse(transaction.date)
         Box (
             modifier = modifier
-                .height(64.dp)
+                .height(84.dp)
                 .width(61.66.dp)
                 .padding(8.dp)
                 .clip(RoundedCornerShape(8.dp))
@@ -201,7 +205,7 @@ fun RecentTransactionsListItem(transaction: Transaction, modifier: Modifier = Mo
         ){
             Text(
                 text = transaction.receiver, // note.noteDetails,
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 lineHeight = 21.sp ,
                 fontWeight = W500 ,
                 style = MaterialTheme.typography.bodyMedium ,
@@ -214,7 +218,7 @@ fun RecentTransactionsListItem(transaction: Transaction, modifier: Modifier = Mo
             )
             Text(
                 text = "Visa.MasterCrad.${transaction.SenderAcount}", // note.noteDetails,
-                fontSize = 12.sp,
+                fontSize = 14.sp,
                 lineHeight = 18.sp ,
                 fontWeight = W400 ,
                 style = MaterialTheme.typography.bodyMedium ,
@@ -283,7 +287,8 @@ fun WelcomeTitle(userName: String,firstname:String ,lastname:String ,navControll
 
             Box(
                 modifier = Modifier
-                    .size(64.dp).height(77.dp)
+                    .size(64.dp)
+                    .height(77.dp)
                     .padding(10.dp)
                     .background(color = colorResource(id = R.color.G40), shape = CircleShape),
                 contentAlignment = Alignment.Center
@@ -320,7 +325,7 @@ fun CurrentBalanceCard(balance: Double) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .height(123.dp)
+            .height(130.dp)
         ,
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFF871E35)
@@ -357,7 +362,7 @@ fun ServicesCard() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .height(121.dp)
+            .height(140.dp)
 
         ,
         colors = CardDefaults.cardColors(
@@ -374,6 +379,7 @@ fun ServicesCard() {
             Row(
                 modifier = Modifier
                     .padding(16.dp)
+                    .height(90.dp)
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -405,7 +411,7 @@ fun ServicesImage(image: Int,text:Int) {
         )
         Text(
             text = stringResource(text), // note.noteDetails,
-            fontSize = 12.sp,
+            fontSize = 16.sp,
             lineHeight = 18.sp ,
             fontWeight = W400 ,
             style = MaterialTheme.typography.bodyMedium ,

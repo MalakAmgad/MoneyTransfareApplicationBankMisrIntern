@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -134,9 +135,11 @@ fun TransactionDetailsScreen(refrence:Long, modifier: Modifier = Modifier, navCo
                     )
                 )
                 .padding(innerPadding),
-            verticalArrangement = Arrangement.SpaceBetween,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+            Spacer(modifier = modifier.height(30.dp))
             Box(
                 modifier = Modifier
                     .size(100.dp)
@@ -159,7 +162,7 @@ fun TransactionDetailsScreen(refrence:Long, modifier: Modifier = Modifier, navCo
                     modifier = Modifier.size(60.22.dp)
                 )
             }
-
+            Spacer(modifier = modifier.height(20.dp))
             // Adjusted Text Columns
             Column {
                 Text(
@@ -388,6 +391,7 @@ fun TransactionDetailsScreen(refrence:Long, modifier: Modifier = Modifier, navCo
                 }
             }
             }
+            Spacer(modifier = modifier.height(20.dp))
                 // Third Card
                 Card(
                     colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.p50)),
@@ -436,7 +440,7 @@ fun TransactionDetailsScreen(refrence:Long, modifier: Modifier = Modifier, navCo
                                 thickness = 1.dp,
                                 modifier = Modifier
                                     .padding(horizontal = 10.dp)
-                                  //  .height(50.dp)
+                                    //  .height(50.dp)
                                     .fillMaxWidth()
                             )
 
