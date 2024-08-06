@@ -37,6 +37,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -73,9 +74,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.bankmisr.MoneyTransfareApplication.Routes.MainRout
 import com.bankmisr.MoneyTransfareApplication.Routes.Route.MAIN_SCREEN
+import com.bankmisr.MoneyTransfareApplication.database.Transaction
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.isValidPassword
 import com.bankmisr.MoneyTransfareApplication.ui.theme.MoneyTransfareApplicationTheme
-
 
 
 
@@ -84,21 +85,28 @@ fun SignInScreen (
     // email:String?,password:String?,
     navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: LoginViewModel = viewModel()
+    viewModel: UserViewModel = viewModel()
 
 ) {
 
     //  val users by viewModel.getNotes().collectAsState(initial = emptyList())
     //  val userDefault =users.last()
+
     var checkBoxState by remember { mutableStateOf(true) }
     val context = LocalContext.current
     val prefs = context.getSharedPreferences("user_data", Context.MODE_PRIVATE)
     val userEmail  = prefs.getString("email", "")!!
     val userPassword = prefs.getString("password", "")!!
-
+    val user= remember { mutableStateOf<User?>(null) }
     var Email by remember { mutableStateOf(userEmail) }
     var Password by remember { mutableStateOf(userPassword) }
 
+    val userAccount = remember { mutableStateOf<User?>(null) }
+    LaunchedEffect(key1 = Email, key2 = Password) {
+        viewModel.getUser(Email,Password).collect { user ->
+            userAccount.value = user
+        }
+    }
     Log.d("trace", "signInScreen: $Email $Password")
     var passwordVisible = remember { mutableStateOf(false) }
 
@@ -283,12 +291,21 @@ fun SignInScreen (
 
                 //   Spacer(modifier = modifier.padding(5.dp))
                 Button(
-                    onClick = { viewModel.loginUser(Email, Password)
+                    onClick = {// viewModel.loginUser(Email, Password)
                         //      if(viewModel.success){
-                        navController.navigate(MAIN_SCREEN)
-                        //      }
-                        //else{ Toast.makeText(context, "Wrong login or password ", Toast.LENGTH_SHORT).show();  }
+
+
+                        val account = userAccount.value ?: User(fullName = "", email = " ", password = "", DateofBirth = ""
+                            , Balance = 0.0, accountNumber = 0 )
+
+                        if (account.accountNumber.toInt() != 0)
+                        {
+                           // MyData =account.accountNumber
+                            navController.navigate(MAIN_SCREEN)
+                        }
+
                         saveCredentials(Email, Password, checkBoxState, context)
+
                     }
                     ,
                     modifier = Modifier

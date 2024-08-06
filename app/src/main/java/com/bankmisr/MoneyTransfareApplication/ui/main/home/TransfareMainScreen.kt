@@ -26,8 +26,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,6 +51,8 @@ import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.R
 import com.bankmisr.MoneyTransfareApplication.Routes.MainRout.NOTIFICATION
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
+import com.bankmisr.MoneyTransfareApplication.database.user.User
+import com.bankmisr.MoneyTransfareApplication.models.Account
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
 import com.bankmisr.MoneyTransfareApplication.ui.main.Transaction.TransactionViewModel
 import com.bankmisr.MoneyTransfareApplication.ui.main.home.notifications.NotificationScreen
@@ -64,20 +69,21 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: UserViewModel = viewModel()
 ) {
-    val userName = "Asmaa Dosuky"
-    var firstname= "Asmaa"
-    var lastname= "Dosuky"
-    val balance = 5613131531.63
-    var transaction = Transaction(
-        amount = 500.0f,
-        sender = "Alice",
-        SenderAcount = "12345",
-        receiver = "Bob",
-        receiverAcount = "98765",
-        reference = "REF54321",
-        date = Date().time,
-        status = "Successful"
-    )
+    val account=(31506481565).toLong()
+    val userAccount = remember { mutableStateOf<User?>(null) }
+    LaunchedEffect(key1 = account) {
+        viewModel.gatUserAccount(account).collect { user ->
+            userAccount.value = user
+        }
+    }
+
+    val Useraccount = userAccount.value ?: User(fullName = "r l", email = " ", password = "", DateofBirth = ""
+    , Balance = 0.0, accountNumber = 0 )
+
+    val userName = Useraccount.fullName
+    val (firstname, lastname)=userName.split(" ", limit = 2)
+    val balance = Useraccount.Balance
+
 
     Scaffold(
     ) {
@@ -126,14 +132,14 @@ fun HomeScreen(
                     .padding(horizontal = 8.dp, vertical = 4.dp)
                 //.clickable { onNavigate() }
             ) {
-                val transactions by viewModel.getAllTransactions().collectAsState(initial = emptyList())
-                val transactionsToDisplay = transactions.take(3)
+
+                val transactions by viewModel.getuserTransactions(Useraccount.accountNumber).collectAsState(initial = emptyList())
 
 
                 LazyColumn(modifier = modifier
                     .padding(top = 16.dp)
                     .weight(0.2f)){
-                    items(transactionsToDisplay) { transaction ->  // Iterate directly over the limited list
+                    items(transactions) { transaction ->  // Iterate directly over the limited list
                         RecentTransactionsListItem(transaction = transaction) /*{
                             navController.navigate("$TRANSACTIONSDetails/${transaction}")
                         }*/
@@ -277,7 +283,7 @@ fun WelcomeTitle(userName: String,firstname:String ,lastname:String ,navControll
 
             Box(
                 modifier = Modifier
-                    .size(64.dp)
+                    .size(64.dp).height(77.dp)
                     .padding(10.dp)
                     .background(color = colorResource(id = R.color.G40), shape = CircleShape),
                 contentAlignment = Alignment.Center
@@ -314,7 +320,7 @@ fun CurrentBalanceCard(balance: Double) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
-           // .height(123.dp)
+            .height(123.dp)
         ,
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFF871E35)
@@ -351,7 +357,7 @@ fun ServicesCard() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-           // .height(121.dp)
+            .height(121.dp)
 
         ,
         colors = CardDefaults.cardColors(

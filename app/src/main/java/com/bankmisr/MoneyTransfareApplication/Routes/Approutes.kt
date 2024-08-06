@@ -42,20 +42,7 @@ fun ApppNavHost() {
     NavHost(navController = navController, startDestination = SIGNIN) {
         composable(route = SIGNIN) { SignInScreen(navController = navController) }
         composable(route = SIGNUP) { SignUp1(navController = navController) }
-        // composable(route = SIGNUP2){ signUp2(navController = navController) }
-//        composable(route = TRANSACTIONS){ TransactionsScreen(navController = navController) }
-//        composable(route = NOTIFICATION){ NotificationScreen(navController = navController) }
-//        composable(route = SERVERERROR){ serverError(navController = navController) }
-//        composable(route = TRANSFARE){ TransferScreen(navController = navController) }
-//        composable(route = TRANSFARE1){ TransferConfirmationScreen(navController = navController) }
-        //  composable(route = TRANSACTIONSDetails){ transactionDetails(navController = navController) }
 
-//        composable(route = "$TRANSACTIONSDetails/{transaction}") { backStackEntry ->
-//            val transaction = backStackEntry.arguments?.getParcelable<Transaction>("transaction", Transaction::class.java)//!!
-//
-//                TransactionDetailsScreen(transaction = transaction, navController = navController)
-//
-//        }
         composable(MAIN_SCREEN) {
            var idleViewModel: IdleViewModel= viewModel()
             MainScreen(appNavController = navController, idleViewModel = idleViewModel

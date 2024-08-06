@@ -15,10 +15,12 @@ class User (
     val email :String,
     @ColumnInfo("Password")
     val password :String,
+    @ColumnInfo("DateofBirth")
+    val DateofBirth :String,
     @ColumnInfo("Balance")
     val Balance :Double=0.0,
     @ColumnInfo("account_number")
-    val accountNumber :Int,
+    val accountNumber :Long,
 ) {
 
 }

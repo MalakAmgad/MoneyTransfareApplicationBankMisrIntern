@@ -40,6 +40,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -68,6 +69,7 @@ import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.R
 import com.bankmisr.MoneyTransfareApplication.Routes.MainRout
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
+import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
 import com.bankmisr.MoneyTransfareApplication.ui.commonUI.bottomBar
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -76,8 +78,26 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TransferPaymentScreen(t: Transaction, modifier: Modifier = Modifier, navController: NavController) {
-    // val t =transaction
+fun TransferPaymentScreen( refrence:Long , modifier: Modifier = Modifier, navController: NavController
+,viewModel: UserViewModel = viewModel()
+) {
+    val transactionState = remember { mutableStateOf<Transaction?>(null) }
+    LaunchedEffect(key1 = refrence) {
+        viewModel.getTransaction(refrence).collect { transaction ->
+            transactionState.value = transaction
+        }
+    }
+
+    val t = transactionState.value ?: Transaction(
+        amount = 0.0,
+        sender = "",
+        SenderAcount = 0,
+        receiver = "",
+        receiverAcount = 0,
+        reference = 0,
+        date = 111,
+        status = false
+    )
 
     Scaffold(
         topBar = {

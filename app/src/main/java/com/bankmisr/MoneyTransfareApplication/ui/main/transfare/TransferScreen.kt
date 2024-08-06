@@ -1,5 +1,6 @@
 package com.bankmisr.MoneyTransfareApplication.ui.main.transfare
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,6 +25,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DatePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -49,6 +51,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -62,7 +65,9 @@ import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.R
 import com.bankmisr.MoneyTransfareApplication.Routes.MainRout
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
+import com.bankmisr.MoneyTransfareApplication.database.user.User
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
+import java.time.LocalDateTime
 import java.util.Date
 
 
@@ -72,16 +77,6 @@ class Recipient() {
         var RecipientAccount: String=""
     }
 }
-val transaction = Transaction(
-    amount = 500.0f,
-    sender = "Alice",
-    SenderAcount = "12345",
-    receiver = "Bob",
-    receiverAcount = "98765",
-    reference = "REF54321",
-    date = Date().time,
-    status = "Successful"
-)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -90,7 +85,7 @@ fun TransferScreen(navController: NavController,
                  viewModel: UserViewModel = viewModel()
 ) {
     var showBottomSheet by remember { mutableStateOf(false) }
-    var accountBalance =1000000.0
+
     var usdEgp=48.4220
     var amountUSD by remember { mutableStateOf(0.0) }
     var amountUSDtext by remember { mutableStateOf("0") }
@@ -99,8 +94,18 @@ fun TransferScreen(navController: NavController,
     var RecipientAccount by remember { mutableStateOf(Recipient.RecipientAccount) }
     val sheetState = rememberModalBottomSheetState()
     var isLimit=(amountEGP<=5000)
+    val account=(31506481565).toLong()
+    val userAccount = remember { mutableStateOf<User?>(null) }
+    LaunchedEffect(key1 = account) {
+        viewModel.gatUserAccount(account).collect { user ->
+            userAccount.value = user
+        }
+    }
 
+    val Useraccount = userAccount.value ?: User(fullName = "r l", email = " ", password = "", DateofBirth = ""
+        , Balance = 0.0, accountNumber = 0 )
 
+    var accountBalance=Useraccount.Balance
     Scaffold(
 
         topBar = {
@@ -651,8 +656,18 @@ fun TransferScreen(navController: NavController,
                 }
                 //   Spacer(modifier = modifier.padding(5.dp))
                 Button(
+                    enabled = RecipientName.isNotBlank() && RecipientAccount.isNotBlank() ,
                     onClick = {
-                        navController.navigate("${MainRout.TRANSFARECONFIRMATION}/${transaction }")
+                        val refrence=(12349667..123496789).random()
+                        val date= System.currentTimeMillis()
+
+                        var transaction= Transaction(amount=amountUSD, sender = Useraccount.fullName,
+                            SenderAcount = Useraccount.accountNumber , receiver =RecipientName  , receiverAcount = RecipientAccount.toLong(),
+                            reference = refrence.toLong(),date=date, status = true)
+
+                            viewModel.insertTransaction(transaction)
+
+                        navController.navigate("${MainRout.TRANSFARECONFIRMATION}/${transaction.reference.toLong()}")
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -695,7 +710,7 @@ fun favouritListItem(transaction: Transaction, modifier: Modifier = Modifier//, 
             .padding(horizontal = 18.dp, vertical = 4.dp)
             .clickable {
                 Recipient.RecipientName = transaction.receiver
-                Recipient.RecipientAccount = transaction.receiverAcount
+                Recipient.RecipientAccount = transaction.receiverAcount.toString()
             }
     ) {
         Row(

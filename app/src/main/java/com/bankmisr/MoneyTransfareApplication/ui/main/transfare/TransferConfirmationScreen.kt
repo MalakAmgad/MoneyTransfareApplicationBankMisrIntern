@@ -54,6 +54,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -79,18 +81,39 @@ import androidx.compose.ui.zIndex
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.R
 import com.bankmisr.MoneyTransfareApplication.Routes.MainRout
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
+import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
+import kotlinx.coroutines.flow.Flow
 import java.util.Date
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TransferConfirmationScreen(t: Transaction, modifier: Modifier = Modifier, navController: NavController) {
+fun TransferConfirmationScreen(refrence: Long,
+                                       modifier: Modifier = Modifier, navController: NavController,
+                                       viewModel: UserViewModel= viewModel()
+) {
+    val transactionState = remember { mutableStateOf<Transaction?>(null) }
+    LaunchedEffect(key1 = refrence) {
+        viewModel.getTransaction(refrence).collect { transaction ->
+            transactionState.value = transaction
+        }
+    }
 
+    val t = transactionState.value ?: Transaction(
+        amount = 0.0,
+        sender = "",
+        SenderAcount = 0,
+        receiver = "",
+        receiverAcount = 0,
+        reference = 0,
+        date = 111,
+        status = false
+    )
 
     Scaffold(
         topBar = {
@@ -231,7 +254,7 @@ fun TransferConfirmationScreen(t: Transaction, modifier: Modifier = Modifier, na
                             Row(
                                 modifier = modifier
                                     .fillMaxWidth()
-                                    // .height(121.dp)
+                                    .height(121.dp)
                                     .padding(5.dp)
                             ) {
                                 Column {
@@ -285,7 +308,7 @@ fun TransferConfirmationScreen(t: Transaction, modifier: Modifier = Modifier, na
                                         modifier = modifier.wrapContentHeight(Alignment.CenterVertically)
                                     )
                                     Text(
-                                        text = "Account xxxx${t.SenderAcount}",
+                                        text = "Account xxxx${t.SenderAcount.toString().takeLast(4)}",
                                         fontSize = 16.sp,
                                         lineHeight = 18.sp,
                                         fontWeight = FontWeight.W400,
@@ -310,7 +333,7 @@ fun TransferConfirmationScreen(t: Transaction, modifier: Modifier = Modifier, na
                             Row(
                                 modifier = modifier
                                     .fillMaxWidth()
-                                    //  .height(121.dp)
+                                    .height(121.dp)
                                     .padding(5.dp)
                             ) {
                                 Column {
@@ -364,7 +387,7 @@ fun TransferConfirmationScreen(t: Transaction, modifier: Modifier = Modifier, na
                                         modifier = modifier.wrapContentHeight(Alignment.CenterVertically)
                                     )
                                     Text(
-                                        text = "Account xxxx${t.receiverAcount}",
+                                        text = "Account xxxx${t.receiverAcount.toString().takeLast(4)}",
                                         fontSize = 16.sp,
                                         lineHeight = 18.sp,
                                         fontWeight = FontWeight.W400,
@@ -411,7 +434,7 @@ fun TransferConfirmationScreen(t: Transaction, modifier: Modifier = Modifier, na
                     Button(
                         onClick = {
                             //navigate
-                            navController.navigate("${MainRout.TRANSFAREPAYMENT }/${t}")
+                            navController.navigate("${MainRout.TRANSFAREPAYMENT }/${t.reference }")
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -451,7 +474,7 @@ fun TransferConfirmationScreen(t: Transaction, modifier: Modifier = Modifier, na
                             .fillMaxWidth()
                             .width(343.dp)
                             .height(60.dp)
-                           // .padding(top = 10.dp)
+                            // .padding(top = 10.dp)
                             .border(
                                 width = 2.dp, // Adjust border width as needed
                                 color = colorResource(id = R.color.marron),

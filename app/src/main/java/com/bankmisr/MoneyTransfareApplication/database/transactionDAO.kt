@@ -4,6 +4,7 @@ package com.bankmisr.MoneyTransfareApplication.database
 import android.os.Parcelable
 import androidx.room.Dao
 import androidx.room.*
+import com.bankmisr.MoneyTransfareApplication.database.user.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.parcelize.Parcelize
 
@@ -14,26 +15,26 @@ data class Transaction (
     @ColumnInfo("_id")
     val id: Int = 0,
     @ColumnInfo("amount")
-    val amount:Float,
+    val amount:Double,
     @ColumnInfo("sender")
     val sender: String,
     @ColumnInfo("sender_acount")
-    val SenderAcount: String,
+    val SenderAcount: Long,
     @ColumnInfo("receiver")
     val receiver: String,
     @ColumnInfo("receiver_acount")
-    val receiverAcount: String,
+    val receiverAcount: Long,
     @ColumnInfo("reference")
-    val reference: String,
+    val reference: Long,
     @ColumnInfo("date")
     val date: Long,
     @ColumnInfo("stauts")
-    val status: String
+    val status: Boolean
 ) : Parcelable
 
 @Dao
 interface TransactionsDAO {
-    @Insert
+    @Upsert
     suspend fun insertTransaction(transaction: Transaction)
     @Update
     suspend fun updateTransaction(transaction: Transaction)
@@ -43,5 +44,11 @@ interface TransactionsDAO {
 
     @Query("SELECT * FROM transactions")
     fun getAllTransactions(): Flow<List<Transaction>>
+
+    @Query("SELECT* FROM transactions WHERE sender_acount = :account ORDER BY date DESC LIMIT 3")
+    fun getuserTransaction(account: Long): Flow<List<Transaction>>
+
+    @Query("SELECT * FROM transactions where reference =:refrence ")
+    fun getTransaction(refrence:Long ): Flow<Transaction?>
 
 }

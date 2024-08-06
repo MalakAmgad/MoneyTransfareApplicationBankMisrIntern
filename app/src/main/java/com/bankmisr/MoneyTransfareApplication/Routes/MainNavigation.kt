@@ -9,9 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
 import com.bankmisr.MoneyTransfareApplication.ui.main.MainNavigationBar
 import com.bankmisr.MoneyTransfareApplication.ui.main.Transaction.TransactionDetailsScreen
@@ -76,24 +78,30 @@ fun MainNavigation(
                 MoreMainScreen(navController = navController, appNavController = appNavController)
             }
 
-            composable("${MainRout.TRANSFARECONFIRMATION}/{transaction}") {
-                val transaction = it.arguments?.getParcelable<Transaction>(
-                    "transaction",
-                    Transaction::class.java
-                )!!
-                TransferConfirmationScreen(transaction, navController = navController)
+            composable(route="${MainRout.TRANSFARECONFIRMATION}/{refrence}" ,
+                arguments = listOf (navArgument("refrence") { type = NavType.LongType })) {
+
+                val refrence = it.arguments?.getLong ("refrence")!!
+                TransferConfirmationScreen(refrence = refrence, navController = navController)
+
+            }
+
+            composable(route="${MainRout.TRANSFAREPAYMENT}/{refrence}" ,
+                arguments = listOf (navArgument("refrence") { type = NavType.LongType })) {
+
+                val refrence = it.arguments?.getLong ("refrence")!!
+                TransferPaymentScreen(refrence = refrence, navController = navController)
 
             }
 
             composable(MainRout.NOTIFICATION) {
                 NotificationScreen(navController = navController)
             }
-            composable("${MainRout.TRANSACTIONSDetails}/{transaction}") {
-                val transaction = it.arguments?.getParcelable<Transaction>(
-                    "transaction",
-                    Transaction::class.java
-                )!!
-                TransactionDetailsScreen(transaction, navController = navController)
+            composable("${MainRout.TRANSACTIONSDetails}/{refrence}" ,
+                arguments = listOf (navArgument("refrence") { type = NavType.LongType })) {
+
+                val refrence = it.arguments?.getLong ("refrence")!!
+                TransactionDetailsScreen(refrence = refrence, navController = navController)
             }
 
         }

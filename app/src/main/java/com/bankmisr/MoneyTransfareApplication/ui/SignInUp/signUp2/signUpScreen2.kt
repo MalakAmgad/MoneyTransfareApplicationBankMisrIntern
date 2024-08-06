@@ -71,6 +71,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.Routes.Route.SIGNIN
 import com.bankmisr.MoneyTransfareApplication.Routes.Route.SIGNUP2
+import com.bankmisr.MoneyTransfareApplication.database.user.User
 import com.bankmisr.MoneyTransfareApplication.models.register
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.RegisterViewModel
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
@@ -82,7 +83,7 @@ fun signUp2 (
     fullname:String,email:String,password:String,
              navController: NavController,
              modifier: Modifier = Modifier,
-             viewModel: RegisterViewModel = viewModel()
+             viewModel: UserViewModel = viewModel()
 ) {
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
@@ -337,7 +338,13 @@ fun signUp2 (
                     //enabled = country.isNotEmpty()&&dateOfBirth.isNotEmpty(),
                     onClick = {
                         val (firstName, lastName) = fullname.split(" ", limit = 2)
-                        val register = register(
+
+                        val balance=(1000000..5000000).random()
+                        val accountNumber=(10053735800..37845389021).random()
+                        val user=User(fullName = fullname, email = email, password = password, Balance = balance.toDouble(), accountNumber = accountNumber, DateofBirth = dateOfBirth )
+                        viewModel.upsert(user)
+
+                        /*val register = register(
                             firstName = firstName,
                             lastName = lastName,
                             gender = "",
@@ -349,7 +356,9 @@ fun signUp2 (
                             dateOfBirth = dateOfBirth,
                             password = password
                         )
-                        viewModel.registerUser(register)
+                        viewModel.registerUser(register)*/
+
+
                         navController.navigate(SIGNIN)  },
                     modifier = Modifier
                         .fillMaxWidth()

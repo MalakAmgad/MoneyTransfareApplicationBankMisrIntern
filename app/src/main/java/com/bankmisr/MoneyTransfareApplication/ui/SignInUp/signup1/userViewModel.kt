@@ -9,6 +9,7 @@ import com.bankmisr.MoneyTransfareApplication.database.Transaction
 import com.bankmisr.MoneyTransfareApplication.database.user.User
 import com.bankmisr.MoneyTransfareApplication.database.UserDBHelper
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class UserViewModel(app: Application): AndroidViewModel(app) {
@@ -25,10 +26,17 @@ class UserViewModel(app: Application): AndroidViewModel(app) {
     fun upsert(n: User){
         viewModelScope.launch(Dispatchers.IO){ db.dao.upsertUser(n)}
     }
+
     fun delete(n: User){
         viewModelScope.launch(Dispatchers.IO) { db.dao.deleteUser(n) }
     }
 
+    fun getUser(email:String,password:String): Flow<User?> {
+        return db.dao.getUser(email,password)
+    }
+    fun gatUserAccount(account:Long): Flow<User?> {
+        return db.dao.getUserAccount(account)
+    }
 
     fun getLastUser() = db.dao.getLastUser()
 
@@ -43,6 +51,7 @@ class UserViewModel(app: Application): AndroidViewModel(app) {
         viewModelScope.launch(Dispatchers.IO) { db.transactionDao.deleteTransaction(n) }
     }
     fun getAllTransactions() = db.transactionDao.getAllTransactions()
-
+    fun getuserTransactions(account:Long) = db.transactionDao.getuserTransaction(account)
+    fun getTransaction(refrence:Long ): Flow<Transaction?> =db.transactionDao.getTransaction(refrence)
 
 }

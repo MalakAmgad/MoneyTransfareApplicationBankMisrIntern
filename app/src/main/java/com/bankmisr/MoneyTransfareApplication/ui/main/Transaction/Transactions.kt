@@ -151,7 +151,7 @@ fun TransactionsScreen(navController: NavController,
                 items(transactions.size) { index ->
                     TransactionsListItem(transaction = transactions[index] )
                     {
-                        navController.navigate("$TRANSACTIONSDetails/${transactions}")
+                        navController.navigate("$TRANSACTIONSDetails/${transactions[index].reference }")
                     }
                 }
             }
@@ -193,7 +193,7 @@ fun TransactionsListItem(transaction: Transaction, modifier: Modifier = Modifier
                 contentAlignment = Alignment.Center
             ){
                 Image( // Use Image composable to display the drawable
-                    painter = if(transaction.status=="Successful") painterResource(id = R.drawable.card2_1) else painterResource(id = R.drawable.bank_1),
+                    painter = if(transaction.status==true) painterResource(id = R.drawable.card2_1) else painterResource(id = R.drawable.bank_1),
                     colorFilter = ColorFilter.tint(colorResource(id = R.color.p300)),
                     contentDescription = "Card" , modifier = modifier
                         .height(36.3.dp)
@@ -287,7 +287,7 @@ fun TransactionsListItem(transaction: Transaction, modifier: Modifier = Modifier
                     .padding(8.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(
-                        if (transaction.status == "Successful") colorResource(id = R.color.mintGreen) else colorResource(
+                        if (transaction.status == true) colorResource(id = R.color.mintGreen) else colorResource(
                             id = R.color.lavenderBrush
                         )
                     ) // Set background color
@@ -300,7 +300,7 @@ fun TransactionsListItem(transaction: Transaction, modifier: Modifier = Modifier
                         lineHeight = 14.sp ,
                         fontWeight = W500 ,
                         style = MaterialTheme.typography.bodyMedium ,
-                        color = if(transaction.status=="Successful") colorResource(id = R.color.Green)else colorResource(id = R.color.D300) ,
+                        color = if(transaction.status==true) colorResource(id = R.color.Green)else colorResource(id = R.color.D300) ,
                         textAlign = TextAlign.Justify,
                         modifier = modifier
                             //  .height(24.dp)

@@ -21,4 +21,10 @@ interface UserDAO {
     @Query("SELECT * FROM user")
     fun getAllUsers(): Flow<List<User>>
 
+    @Query("SELECT * FROM user where email=:Email AND password=:Password ")
+    fun getUser(Email:String,Password:String): Flow< User?>
+
+    @Query("SELECT * FROM user where account_number=:account")
+    fun getUserAccount(account:Long): Flow< User?>
+
 }

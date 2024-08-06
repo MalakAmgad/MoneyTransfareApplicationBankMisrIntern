@@ -119,7 +119,7 @@ fun NotificationScreen(navController: NavController,
                 .padding(top = 16.dp)
                 .weight(0.2f)) {
                 items(transactions.size) { index ->
-                    if (transactions[index].status=="successful")
+                    if (transactions[index].status==true)
                     {
                         NotificationsListItem(transaction = transactions[index] )
                     {
