@@ -217,7 +217,7 @@ fun SignUp1(
                         .background(colorResource(id = R.color.white)),
                     placeholder = {
                         Text(
-                            "Enter your Full Name",
+                            "Enter your Email",
                             fontSize = 14.sp,
                             fontWeight = FontWeight.W400,
                             lineHeight = 21.sp,
