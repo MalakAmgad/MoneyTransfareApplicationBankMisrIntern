@@ -142,7 +142,7 @@ fun TransactionDetailsScreen(refrence:Long, modifier: Modifier = Modifier, navCo
             Spacer(modifier = modifier.height(30.dp))
             Box(
                 modifier = Modifier
-                    .size(100.dp)
+                    .size(137.dp)
                     .background(
                         brush = Brush.linearGradient(
                             colors = listOf(
@@ -280,7 +280,7 @@ fun TransactionDetailsScreen(refrence:Long, modifier: Modifier = Modifier, navCo
                                     modifier = modifier.wrapContentHeight(Alignment.CenterVertically)
                                 )
                                 Text(
-                                    text = "Account xxxx${t.SenderAcount}",
+                                    text = "Account xxxx${t.SenderAcount.toString().takeLast(4)}",
                                     fontSize = 16.sp,
                                     lineHeight = 18.sp,
                                     fontWeight = FontWeight.W400,
@@ -355,7 +355,7 @@ fun TransactionDetailsScreen(refrence:Long, modifier: Modifier = Modifier, navCo
                                     modifier = modifier.wrapContentHeight(Alignment.CenterVertically)
                                 )
                                 Text(
-                                    text = "Account xxxx${t.receiverAcount}",
+                                    text = "Account xxxx${t.receiverAcount.toString().takeLast(4)}",
                                     fontSize = 16.sp,
                                     lineHeight = 18.sp,
                                     fontWeight = FontWeight.W400,

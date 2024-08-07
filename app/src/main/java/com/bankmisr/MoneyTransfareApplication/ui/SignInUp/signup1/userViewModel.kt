@@ -5,9 +5,13 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.Delete
+import androidx.room.Query
+import androidx.room.Upsert
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
 import com.bankmisr.MoneyTransfareApplication.database.user.User
 import com.bankmisr.MoneyTransfareApplication.database.UserDBHelper
+import com.bankmisr.MoneyTransfareApplication.database.user.Favourite
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -37,7 +41,9 @@ class UserViewModel(app: Application): AndroidViewModel(app) {
     fun gatUserAccount(account:Long): Flow<User?> {
         return db.dao.getUserAccount(account)
     }
-
+    fun gatUserAuthentication(Email:String): Flow<User?> {
+        return db.dao.getUserAuthentication(Email)
+    }
     fun getLastUser() = db.dao.getLastUser()
 
 
@@ -53,5 +59,15 @@ class UserViewModel(app: Application): AndroidViewModel(app) {
     fun getAllTransactions() = db.transactionDao.getAllTransactions()
     fun getuserTransactions(account:Long) = db.transactionDao.getuserTransaction(account)
     fun getTransaction(refrence:Long ): Flow<Transaction?> =db.transactionDao.getTransaction(refrence)
+
+
+    fun upserFavourite(n: Favourite) {
+        viewModelScope.launch(Dispatchers.IO) { db.FavouriteDao.upsertFavourite(n) }
+    }
+
+    fun deleteFavourite(n: Favourite) {
+        viewModelScope.launch(Dispatchers.IO) { db.FavouriteDao.deleteFavourite(n) }
+    }
+    fun getAllFavourites() = db.FavouriteDao.getAllFavourits()
 
 }

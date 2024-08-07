@@ -86,7 +86,11 @@ import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.R
 import com.bankmisr.MoneyTransfareApplication.Routes.MainRout
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
+import com.bankmisr.MoneyTransfareApplication.database.user.Favourite
+import com.bankmisr.MoneyTransfareApplication.database.user.User
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
+import com.bankmisr.MoneyTransfareApplication.ui.main.home.ACCOUNT
+import com.bankmisr.MoneyTransfareApplication.ui.main.more.addNewFavourite
 import kotlinx.coroutines.flow.Flow
 import java.util.Date
 
@@ -114,7 +118,24 @@ fun TransferConfirmationScreen(refrence: Long,
         date = 111,
         status = false
     )
+    val account = ACCOUNT.accountNum
+    val userAccount = remember { mutableStateOf<User?>(null) }
+    LaunchedEffect(key1 = account) {
+        viewModel.gatUserAccount(account).collect { user ->
+            userAccount.value = user
+        }
+    }
 
+    val Useraccount = userAccount.value ?: User(fullName = "r l", email = " ", password = "", DateofBirth = ""
+        , Balance = 0.0, accountNumber = 0 )
+    //Log.d("trace","${Recipient.RecipientAccount }")
+
+    val recipientAccount = remember { mutableStateOf<User?>(null) }
+    LaunchedEffect(key1 = Recipient.RecipientAccount) {
+        viewModel.gatUserAccount(Recipient.RecipientAccount).collect { user ->
+            recipientAccount.value = user
+        }
+    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -430,10 +451,18 @@ fun TransferConfirmationScreen(refrence: Long,
                     .height(121.dp)
                     .padding(5.dp)
             ) {
+                var balance=(Useraccount.Balance-t.amount).toDouble()
 
+                val UserAuthentication = recipientAccount.value ?: User(fullName = "r l", email = " ", password = "", DateofBirth = ""
+                    , Balance = 0.0, accountNumber = 0 )
+                val match = (UserAuthentication.accountNumber == Recipient.RecipientAccount)&&(UserAuthentication.fullName.trim()==Recipient.RecipientName)
+                //Log.d("trace","${UserAuthentication.accountNumber}")
+                //Log.d("trace","${match}")
                     Button(
+                        enabled = match,
                         onClick = {
                             //navigate
+                            viewModel.upsert(User(id=Useraccount.id, Balance =balance, fullName = Useraccount.fullName, accountNumber = Useraccount.accountNumber,email=Useraccount.email, password = Useraccount.password, DateofBirth = Useraccount.DateofBirth))
                             navController.navigate("${MainRout.TRANSFAREPAYMENT }/${t.reference }")
                         },
                         modifier = Modifier
@@ -467,8 +496,7 @@ fun TransferConfirmationScreen(refrence: Long,
                     Button(
                         onClick = {
                             buttonClicked = !buttonClicked
-
-
+                            navController.popBackStack()
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -487,7 +515,7 @@ fun TransferConfirmationScreen(refrence: Long,
                         )
                     ) {
                         Text(
-                            text = "Add to Favourite",
+                            text = "Previous",
                             color = if (buttonClicked) colorResource(id = R.color.white) else colorResource(
                                 id = R.color.marron
                             ),
@@ -515,6 +543,7 @@ fun sendNotification(context: Context, title: String, text: String) {
         .setSmallIcon(R.drawable.notification)
         .setContentTitle(title)
         .setContentText(text)
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         .setAutoCancel(true)
 
 

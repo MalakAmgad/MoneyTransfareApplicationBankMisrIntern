@@ -1,5 +1,6 @@
 package com.bankmisr.MoneyTransfareApplication.ui.main.transfare
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,14 +19,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DatePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -65,19 +64,22 @@ import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.R
 import com.bankmisr.MoneyTransfareApplication.Routes.MainRout
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
+import com.bankmisr.MoneyTransfareApplication.database.user.Favourite
 import com.bankmisr.MoneyTransfareApplication.database.user.User
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
-import java.time.LocalDateTime
-import java.util.Date
+import com.bankmisr.MoneyTransfareApplication.ui.main.home.ACCOUNT
 
 
 class Recipient() {
     companion object {
         var RecipientName: String=""
-        var RecipientAccount: String=""
+        var RecipientAccount: Long=0L
+        var isClicked: Boolean=false
     }
 }
 
+
+@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransferScreen(navController: NavController,
@@ -85,7 +87,6 @@ fun TransferScreen(navController: NavController,
                  viewModel: UserViewModel = viewModel()
 ) {
     var showBottomSheet by remember { mutableStateOf(false) }
-
     var usdEgp=48.4220
     var amountUSD by remember { mutableStateOf(0.0) }
     var amountUSDtext by remember { mutableStateOf("0") }
@@ -94,7 +95,8 @@ fun TransferScreen(navController: NavController,
     var RecipientAccount by remember { mutableStateOf(Recipient.RecipientAccount) }
     val sheetState = rememberModalBottomSheetState()
     var isLimit=(amountEGP<=5000)
-    val account=(31506481565).toLong()
+    //val account=(31506481565).toLong()
+    val account=ACCOUNT.accountNum
     val userAccount = remember { mutableStateOf<User?>(null) }
     LaunchedEffect(key1 = account) {
         viewModel.gatUserAccount(account).collect { user ->
@@ -183,7 +185,6 @@ fun TransferScreen(navController: NavController,
                     onValueChange = { newValue ->
                         val potentialAmountUSD = newValue.toDoubleOrNull() ?: 0.0
                         val potentialAmountEGP = potentialAmountUSD * usdEgp
-
                         if (potentialAmountEGP <= 5000 && potentialAmountEGP <=accountBalance ) {
                             amountUSDtext = newValue
                             amountUSD = potentialAmountUSD
@@ -532,7 +533,8 @@ fun TransferScreen(navController: NavController,
                         ) {
                             Column {
                                 Row (
-                                    horizontalArrangement = Arrangement.Center
+                                    horizontalArrangement = Arrangement.Center,
+                                    modifier = Modifier.fillMaxWidth()
                                 ){
                                     Image( // Use Image composable to display the drawable
                                         painter = painterResource(id = R.drawable.favorite_1),
@@ -554,13 +556,13 @@ fun TransferScreen(navController: NavController,
                                         modifier = modifier//.fillMaxWidth()
                                             .padding(2.dp)
                                     )}
-                                val transactions by viewModel.getAllTransactions().collectAsState(initial = emptyList())
+                                val Favourites by viewModel.getAllFavourites().collectAsState(initial = emptyList())
                                 LazyColumn(modifier = modifier
                                     .padding(top = 16.dp)
                                     .weight(0.2f)) {
-                                    items(transactions.size) { index ->
+                                    items(Favourites.size) { index ->
                                         favouritListItem(
-                                            transaction = transactions[index]
+                                            favourite = Favourites[index]
                                         )
 
                                     }
@@ -603,7 +605,7 @@ fun TransferScreen(navController: NavController,
                         color = colorResource(id = R.color.G700)
                     )
                     OutlinedTextField(
-                        value =RecipientName ,
+                        value =if(Recipient.isClicked)Recipient.RecipientName else RecipientName ,
                         onValueChange = { RecipientName = it },
                         modifier = Modifier
                             //  .width(343.dp)
@@ -636,8 +638,10 @@ fun TransferScreen(navController: NavController,
 
 
                     OutlinedTextField(
-                        value = RecipientAccount,
-                        onValueChange = { RecipientAccount = it },
+                        value = if(Recipient.isClicked) "${Recipient.RecipientAccount}" else "${RecipientAccount}",
+                        onValueChange = { newValue ->
+                            RecipientAccount = newValue.toLongOrNull() ?: Recipient.RecipientAccount
+                        },
                         modifier = Modifier
                             // .width(343.dp)
                             .height(54.dp)
@@ -655,12 +659,21 @@ fun TransferScreen(navController: NavController,
                     )
                 }
                 //   Spacer(modifier = modifier.padding(5.dp))
+                var passwordVisible = remember { mutableStateOf(false) }
+                LaunchedEffect(key1 = account) {
+                    viewModel.gatUserAccount(account).collect { user ->
+                        userAccount.value = user
+                    }
+                }
+
                 Button(
-                    enabled = RecipientName.isNotBlank() && RecipientAccount.isNotBlank() ,
+                    enabled = ((RecipientName.isNotBlank() && RecipientAccount!=0L)||Recipient.isClicked)
+                    ,
                     onClick = {
                         val refrence=(12349667..123496789).random()
                         val date= System.currentTimeMillis()
-
+                        Recipient.RecipientName=RecipientName
+                        Recipient.RecipientAccount=RecipientAccount
                         var transaction= Transaction(amount=amountUSD, sender = Useraccount.fullName,
                             SenderAcount = Useraccount.accountNumber , receiver =RecipientName  , receiverAcount = RecipientAccount.toLong(),
                             reference = refrence.toLong(),date=date, status = true)
@@ -699,7 +712,7 @@ fun TransferScreen(navController: NavController,
 }
 
 @Composable
-fun favouritListItem(transaction: Transaction, modifier: Modifier = Modifier//, onNavigate: () -> Unit
+fun favouritListItem(favourite: Favourite, modifier: Modifier = Modifier//, onNavigate: () -> Unit
 ) {
 
 
@@ -709,8 +722,9 @@ fun favouritListItem(transaction: Transaction, modifier: Modifier = Modifier//, 
             .fillMaxWidth()
             .padding(horizontal = 18.dp, vertical = 4.dp)
             .clickable {
-                Recipient.RecipientName = transaction.receiver
-                Recipient.RecipientAccount = transaction.receiverAcount.toString()
+                Recipient.RecipientName = favourite.fullName
+                Recipient.RecipientAccount = favourite.accountNumber
+                Recipient.isClicked = true
             }
     ) {
         Row(
@@ -748,7 +762,7 @@ fun favouritListItem(transaction: Transaction, modifier: Modifier = Modifier//, 
             ) {
 
                 Text(
-                    text = "${transaction.receiver}",
+                    text = "${favourite.fullName }",
                     fontSize = 16.sp,
                     lineHeight = 30.sp,
                     fontWeight = FontWeight.W600,
@@ -758,7 +772,7 @@ fun favouritListItem(transaction: Transaction, modifier: Modifier = Modifier//, 
                     modifier = modifier.wrapContentHeight(Alignment.CenterVertically)
                 )
                 Text(
-                    text = "Account xxxx${transaction.receiverAcount}",
+                    text = "Account xxxx${favourite.accountNumber.toString().takeLast(4)}",
                     fontSize = 16.sp,
                     lineHeight = 18.sp,
                     fontWeight = FontWeight.W400,

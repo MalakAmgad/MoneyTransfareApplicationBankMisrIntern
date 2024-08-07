@@ -47,6 +47,7 @@ import com.bankmisr.MoneyTransfareApplication.Routes.Route.TRANSACTIONSDetails
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
 import com.bankmisr.MoneyTransfareApplication.ui.commonUI.bottomBar
+import com.bankmisr.MoneyTransfareApplication.ui.main.home.ACCOUNT
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -119,7 +120,7 @@ fun NotificationScreen(navController: NavController,
                 .padding(top = 16.dp)
                 .weight(0.2f)) {
                 items(transactions.size) { index ->
-                    if (transactions[index].status==true)
+                    if (transactions[index].status==true&&(transactions[index].SenderAcount!=ACCOUNT.accountNum))
                     {
                         NotificationsListItem(transaction = transactions[index] )
                     {

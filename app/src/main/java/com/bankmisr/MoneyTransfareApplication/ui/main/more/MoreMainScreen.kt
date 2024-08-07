@@ -50,6 +50,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bankmisr.MoneyTransfareApplication.R
+import com.bankmisr.MoneyTransfareApplication.Routes.MainRout.FAVOURITE
+import com.bankmisr.MoneyTransfareApplication.Routes.Route.NOTIFICATION
 import com.bankmisr.MoneyTransfareApplication.Routes.Route.SIGNIN
 import kotlinx.coroutines.launch
 
@@ -85,7 +87,7 @@ fun MoreMainScreen(
     ) {
         MoreHeader()
         MoreListItem(R.string.TransferFrom, R.drawable.website_1, true)
-        MoreListItem(R.string.Favourites, R.drawable.favorite_1, true)
+        MoreListItem(R.string.Favourites, R.drawable.favorite_1, true,onChevronClick = {navController.navigate(FAVOURITE)})
         MoreListItem(R.string.Profile, R.drawable.profile_1, true)
 
         MoreListItem(

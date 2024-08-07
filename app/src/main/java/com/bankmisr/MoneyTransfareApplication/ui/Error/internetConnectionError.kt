@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -35,14 +36,18 @@ import androidx.compose.ui.text.font.FontWeight.Companion.W600
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.R
+import com.bankmisr.MoneyTransfareApplication.Routes.Route
+import com.bankmisr.MoneyTransfareApplication.ui.main.isInternetAvailable
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun connectionError(modifier: Modifier = Modifier, navController: NavController) {
 
+    var context= LocalContext.current
     Scaffold(
         topBar = {
             TopAppBar(
@@ -100,6 +105,9 @@ fun connectionError(modifier: Modifier = Modifier, navController: NavController)
             Button(
                 onClick = {
                     Intent(Settings.ACTION_WIRELESS_SETTINGS)
+                    if(isInternetAvailable(context)){
+                        context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()

@@ -26,6 +26,6 @@ class IdleViewModel (application: Application) : AndroidViewModel(application) {
     }
 
     companion object {
-        private const val IDLE_TIMEOUT =  30 * 60 * 1000L // 30 minutes
+        private const val IDLE_TIMEOUT =  10 * 60 * 1000L // 30 minutes
     }
 }

@@ -42,7 +42,7 @@ interface TransactionsDAO {
     @Delete
     suspend fun deleteTransaction(transaction: Transaction)
 
-    @Query("SELECT * FROM transactions")
+    @Query("SELECT * FROM transactions ORDER BY date DESC")
     fun getAllTransactions(): Flow<List<Transaction>>
 
     @Query("SELECT* FROM transactions WHERE sender_acount = :account ORDER BY date DESC LIMIT 3")

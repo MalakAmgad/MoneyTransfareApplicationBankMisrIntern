@@ -4,6 +4,8 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
@@ -44,6 +46,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bankmisr.MoneyTransfareApplication.Routes.Route
+import com.bankmisr.MoneyTransfareApplication.ui.main.transfare.sendNotification
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
@@ -54,6 +57,7 @@ fun MainScreen(
     val context = LocalContext.current
     requestNotificationPermission(context)
     MainNavigation(appNavController = appNavController)
+    if(!isInternetAvailable(context)){appNavController.navigate(Route.INTERNET)}
 
     val isIdle by idleViewModel.isIdle
 
@@ -91,6 +95,16 @@ fun MainScreen(
 
 }
 
+fun isInternetAvailable(context: Context): Boolean {
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        return networkCapabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) ?: false
+    } else {
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
+}
 
 @Composable
 fun IdleAlertDialog(onDismiss: () -> Unit, onLogout: () -> Unit) {

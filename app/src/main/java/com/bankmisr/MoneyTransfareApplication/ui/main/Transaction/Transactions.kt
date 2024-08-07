@@ -88,7 +88,8 @@ fun TransactionsScreen(navController: NavController,
                             text = "Transactions",
                             color = colorResource(id = R.color.G900),
                             modifier = Modifier
-                                .width(124.dp).padding(bottom = 10.dp)
+                                .width(124.dp)
+                                .padding(bottom = 10.dp)
                                 .height(30.dp),
                             fontSize = 20.sp,
                             fontWeight = FontWeight.W500,
@@ -120,7 +121,7 @@ fun TransactionsScreen(navController: NavController,
                         colors = listOf(
                             colorResource(id = R.color.seashell),
                             colorResource(id = R.color.pastel),
-                        //    colorResource(id = R.color.pastel)
+                            //    colorResource(id = R.color.pastel)
                         ),
                         end = Offset(0f, Float.POSITIVE_INFINITY)
                     )
@@ -129,15 +130,16 @@ fun TransactionsScreen(navController: NavController,
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column (modifier = modifier.weight(0.01f)){
+            Column (modifier = modifier.padding(20.dp)
+            ){
                 Text(
                     text = "Your Last Transactions",
                     color = colorResource(id = R.color.G900),
                     modifier = Modifier
-                        .width(343.5.dp).weight(3f)
-                    //  .padding(top=20.dp)
+                        .width(343.5.dp)//.weight(3f)
+                        .padding(top = 20.dp, bottom = 20.dp)
                     ,
-                    fontSize = 20.sp,
+                    fontSize = 28.sp,
                     fontWeight = FontWeight.W600,
                     //lineHeight = 30.sp,
                     textAlign = TextAlign.Center
@@ -147,11 +149,13 @@ fun TransactionsScreen(navController: NavController,
             val transactions by viewModel.getAllTransactions().collectAsState(initial = emptyList())
 
 
-            LazyColumn(modifier = modifier.padding(top = 16.dp).weight(0.2f)) {
+            LazyColumn(modifier = modifier.padding(top = 16.dp)//.weight(0.2f)
+            ) {
                 items(transactions.size) { index ->
                     TransactionsListItem(transaction = transactions[index] )
                     {
                         navController.navigate("$TRANSACTIONSDetails/${transactions[index].reference }")
+
                     }
                 }
             }
@@ -165,10 +169,11 @@ fun TransactionsListItem(transaction: Transaction, modifier: Modifier = Modifier
     val transactionDate = Date(transaction.date) // Convert timestamp to Date
     val calendarTransaction = Calendar.getInstance().apply { time = transactionDate }
     val calendarToday = Calendar.getInstance()
+    Spacer(modifier = modifier.padding(vertical = 5.dp))
     Card(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         modifier = modifier
-            .fillMaxWidth()//.height(121.dp)
+            .fillMaxWidth().height(141.dp)
             .padding(horizontal = 8.dp, vertical = 4.dp)
             .clickable { onNavigate() }
     ) {
@@ -209,7 +214,7 @@ fun TransactionsListItem(transaction: Transaction, modifier: Modifier = Modifier
             ){
                 Text(
                     text = transaction.receiver, // note.noteDetails,
-                    fontSize = 14.sp,
+                    fontSize = 16.sp,
                     lineHeight = 21.sp ,
                     fontWeight = W500 ,
                     style = MaterialTheme.typography.bodyMedium ,
@@ -222,7 +227,7 @@ fun TransactionsListItem(transaction: Transaction, modifier: Modifier = Modifier
                 )
                 Text(
                     text = "Visa.MasterCrad.${transaction.SenderAcount}", // note.noteDetails,
-                    fontSize = 12.sp,
+                    fontSize = 14.sp,
                     lineHeight = 18.sp ,
                     fontWeight = W400 ,
                     style = MaterialTheme.typography.bodyMedium ,
@@ -254,7 +259,7 @@ fun TransactionsListItem(transaction: Transaction, modifier: Modifier = Modifier
                 )
                 Text(
                     text = String.format("$%.2f", transaction.amount), // note.noteDetails,
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
                     lineHeight = 24.sp ,
                     fontWeight = W500 ,
                     style = MaterialTheme.typography.bodyMedium ,
@@ -262,7 +267,7 @@ fun TransactionsListItem(transaction: Transaction, modifier: Modifier = Modifier
                     textAlign = TextAlign.Left,
                     modifier = modifier
                         .height(24.dp)
-                       // .width(49.dp)
+                        // .width(49.dp)
                         .weight(0.0001f)
                         .wrapContentHeight(Alignment.CenterVertically)
                 )

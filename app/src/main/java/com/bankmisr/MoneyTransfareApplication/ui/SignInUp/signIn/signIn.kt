@@ -72,14 +72,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.bankmisr.MoneyTransfareApplication.Routes.MainRout
 import com.bankmisr.MoneyTransfareApplication.Routes.Route.MAIN_SCREEN
-import com.bankmisr.MoneyTransfareApplication.database.Transaction
-import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.isValidPassword
-import com.bankmisr.MoneyTransfareApplication.ui.theme.MoneyTransfareApplicationTheme
+import com.bankmisr.MoneyTransfareApplication.ui.main.home.ACCOUNT
 
 
-
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun SignInScreen (
     // email:String?,password:String?,
@@ -95,9 +92,9 @@ fun SignInScreen (
     var checkBoxState by remember { mutableStateOf(true) }
     val context = LocalContext.current
     val prefs = context.getSharedPreferences("user_data", Context.MODE_PRIVATE)
-    val userEmail  = prefs.getString("email", "")!!
-    val userPassword = prefs.getString("password", "")!!
-    val user= remember { mutableStateOf<User?>(null) }
+    val userEmail = prefs.getString("email", "")!!.trim()
+    val userPassword = prefs.getString("password", "")!!.trim()
+    //val user= remember { mutableStateOf<User?>(null) }
     var Email by remember { mutableStateOf(userEmail) }
     var Password by remember { mutableStateOf(userPassword) }
 
@@ -107,8 +104,16 @@ fun SignInScreen (
             userAccount.value = user
         }
     }
-    Log.d("trace", "signInScreen: $Email $Password")
+    //Log.d("trace", "signInScreen: $Email $Password")
     var passwordVisible = remember { mutableStateOf(false) }
+    LaunchedEffect(key1 = Email) {
+        viewModel.gatUserAuthentication(Email).collect { user ->
+            userAccount.value = user
+        }
+    }
+
+    val UserAuthentication = userAccount.value ?: User(fullName = "r l", email = " ", password = "", DateofBirth = ""
+        , Balance = 0.0, accountNumber = 0 )
 
     Scaffold(
         bottomBar = {
@@ -202,7 +207,7 @@ fun SignInScreen (
 
                 OutlinedTextField(
                     value = Email,
-                    onValueChange = { Email=it },
+                    onValueChange = { Email=it.trim() },
                     modifier = Modifier
                         .fillMaxWidth()
                         //    .width(343.dp)
@@ -241,7 +246,7 @@ fun SignInScreen (
 
                 OutlinedTextField(
                     value = Password,
-                    onValueChange = { Password=it },
+                    onValueChange = { Password=it.trim() },
                     visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -298,9 +303,17 @@ fun SignInScreen (
                         val account = userAccount.value ?: User(fullName = "", email = " ", password = "", DateofBirth = ""
                             , Balance = 0.0, accountNumber = 0 )
 
-                        if (account.accountNumber.toInt() != 0)
-                        {
-                           // MyData =account.accountNumber
+
+                       //ACCOUNT.accountNum=account.accountNumber
+                        //Log.d("trace", "SignInScreen Authentication:${UserAuthentication.password.trim()} ")
+                        val match = UserAuthentication.password.trim() == Password.trim()
+                        //this means itt points to the same object
+                        //Log.d("trace", "SignInScreen Authentication:${UserAuthentication.password.trim()} ")
+
+                        if (match)
+                       {
+                            // MyData =account.accountNumber
+                           ACCOUNT.accountNum=account.accountNumber
                             navController.navigate(MAIN_SCREEN)
                         }
 

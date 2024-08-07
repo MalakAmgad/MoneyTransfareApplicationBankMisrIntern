@@ -69,6 +69,7 @@ import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.R
 import com.bankmisr.MoneyTransfareApplication.Routes.MainRout
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
+import com.bankmisr.MoneyTransfareApplication.database.user.Favourite
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.UserViewModel
 import com.bankmisr.MoneyTransfareApplication.ui.commonUI.bottomBar
 import java.text.SimpleDateFormat
@@ -136,7 +137,7 @@ fun TransferPaymentScreen( refrence:Long , modifier: Modifier = Modifier, navCon
         val context= LocalContext.current
 
         sendNotification(
-            context = context, title ="The Transaction is${t.status}",
+            context = context, title ="The Transaction is${(t.status)}successful",
             text ="you have sent${t.amount}USD to ${t.receiver  }" )
 
         Column(
@@ -253,7 +254,7 @@ fun TransferPaymentScreen( refrence:Long , modifier: Modifier = Modifier, navCon
                                         modifier = modifier.wrapContentHeight(Alignment.CenterVertically)
                                     )
                                     Text(
-                                        text = "Account xxxx${t.SenderAcount}",
+                                        text = "Account xxxx${t.SenderAcount.toString().takeLast(4)}",
                                         fontSize = 16.sp,
                                         lineHeight = 18.sp,
                                         fontWeight = FontWeight.W400,
@@ -331,7 +332,7 @@ fun TransferPaymentScreen( refrence:Long , modifier: Modifier = Modifier, navCon
                                         modifier = modifier.wrapContentHeight(Alignment.CenterVertically)
                                     )
                                     Text(
-                                        text = "Account xxxx${t.receiverAcount}",
+                                        text = "Account xxxx${t.receiverAcount.toString().takeLast(4)}",
                                         fontSize = 16.sp,
                                         lineHeight = 18.sp,
                                         fontWeight = FontWeight.W400,
@@ -435,8 +436,7 @@ fun TransferPaymentScreen( refrence:Long , modifier: Modifier = Modifier, navCon
                         Button(
                             onClick = {
                                 buttonClicked = !buttonClicked
-
-
+                                viewModel.upserFavourite(Favourite(fullName = t.receiver, accountNumber = t.receiverAcount))
                             },
                             modifier = Modifier
                                 .fillMaxWidth()

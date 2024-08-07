@@ -51,6 +51,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.bankmisr.MoneyTransfareApplication.R
 import com.bankmisr.MoneyTransfareApplication.Routes.MainRout.NOTIFICATION
+import com.bankmisr.MoneyTransfareApplication.Routes.Route
 import com.bankmisr.MoneyTransfareApplication.database.Transaction
 import com.bankmisr.MoneyTransfareApplication.database.user.User
 import com.bankmisr.MoneyTransfareApplication.models.Account
@@ -63,6 +64,12 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+class ACCOUNT {
+    companion object { // You can optionally name the companion object here
+        var accountNum: Long = 0L
+    }
+}
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
@@ -70,7 +77,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: UserViewModel = viewModel()
 ) {
-    val account=(31506481565).toLong()
+    val account = ACCOUNT.accountNum
     val userAccount = remember { mutableStateOf<User?>(null) }
     LaunchedEffect(key1 = account) {
         viewModel.gatUserAccount(account).collect { user ->
@@ -124,7 +131,7 @@ fun HomeScreen(
                     modifier = modifier
                         .fillMaxWidth()
                         .clickable {
-
+                            navController.navigate(Route.TRANSACTIONS)
                         }
                 )
             }
@@ -217,7 +224,7 @@ fun RecentTransactionsListItem(transaction: Transaction, modifier: Modifier = Mo
                     .wrapContentHeight(Alignment.CenterVertically)
             )
             Text(
-                text = "Visa.MasterCrad.${transaction.SenderAcount}", // note.noteDetails,
+                text = "Visa.MasterCrad.${transaction.SenderAcount.toString().takeLast(4)!!}", // note.noteDetails,
                 fontSize = 14.sp,
                 lineHeight = 18.sp ,
                 fontWeight = W400 ,

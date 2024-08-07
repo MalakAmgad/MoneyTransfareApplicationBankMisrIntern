@@ -14,6 +14,7 @@ import com.bankmisr.MoneyTransfareApplication.Routes.Route.SIGNIN
 import com.bankmisr.MoneyTransfareApplication.Routes.Route.SIGNUP
 import com.bankmisr.MoneyTransfareApplication.Routes.Route.SIGNUP2
 import com.bankmisr.MoneyTransfareApplication.Routes.Route.TRANSFARE1
+import com.bankmisr.MoneyTransfareApplication.ui.Error.connectionError
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signIn.SignInScreen
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signUp2.signUp2
 import com.bankmisr.MoneyTransfareApplication.ui.SignInUp.signup1.SignUp1
@@ -33,6 +34,7 @@ object Route {
     const val SERVERERROR = "servererror"
     const val TRANSFARE1 = "transfare1"
     const val MAIN_SCREEN = "MainScreen"
+    const val INTERNET = "internet"
 }
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -60,6 +62,7 @@ fun ApppNavHost() {
             val password = it.arguments?.getString("password")!!
             signUp2(fullname, email, password, navController = navController)
         }
+        composable(route = Route.INTERNET) { connectionError(navController = navController) }
 
     }
 

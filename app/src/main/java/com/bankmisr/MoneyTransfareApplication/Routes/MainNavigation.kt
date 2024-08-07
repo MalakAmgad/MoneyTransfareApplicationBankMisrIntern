@@ -20,6 +20,7 @@ import com.bankmisr.MoneyTransfareApplication.ui.main.Transaction.TransactionDet
 import com.bankmisr.MoneyTransfareApplication.ui.main.Transaction.TransactionsScreen
 import com.bankmisr.MoneyTransfareApplication.ui.main.home.HomeScreen
 import com.bankmisr.MoneyTransfareApplication.ui.main.home.notifications.NotificationScreen
+import com.bankmisr.MoneyTransfareApplication.ui.main.more.FavouriteScreen
 import com.bankmisr.MoneyTransfareApplication.ui.main.myCards.MyCardsScreen
 import com.bankmisr.MoneyTransfareApplication.ui.main.transfare.TransferConfirmationScreen
 import com.bankmisr.MoneyTransfareApplication.ui.main.transfare.TransferPaymentScreen
@@ -38,6 +39,7 @@ object MainRout {
     const val SERVERERROR = "servererror"
     const val TRANSFARECONFIRMATION = "transfareConfirmation"
     const val TRANSFAREPAYMENT = "transfarepayment"
+    const val FAVOURITE = "favourite"
 }
 
 
@@ -102,6 +104,9 @@ fun MainNavigation(
 
                 val refrence = it.arguments?.getLong ("refrence")!!
                 TransactionDetailsScreen(refrence = refrence, navController = navController)
+            }
+            composable(MainRout.FAVOURITE) {
+                FavouriteScreen(navController = navController)
             }
 
         }
