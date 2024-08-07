@@ -120,7 +120,7 @@ fun NotificationScreen(navController: NavController,
                 .padding(top = 16.dp)
                 .weight(0.2f)) {
                 items(transactions.size) { index ->
-                    if (transactions[index].status==true&&(transactions[index].SenderAcount!=ACCOUNT.accountNum))
+                    if (transactions[index].status==true&&(transactions[index].receiverAcount==ACCOUNT.accountNum))
                     {
                         NotificationsListItem(transaction = transactions[index] )
                     {
