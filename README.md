@@ -33,7 +33,7 @@ Welcome to the Money Transfer App! This project is a comprehensive solution for 
 
 6. **Money Transfer:**
    - Transfer money with a limit of 5000 L.E. per transaction.
-   - Verify recipient account details before proceeding with the transfer.
+   - Verify recipient account details before proceeding with the transfer as the recipient account and name should be stored in the DB.
    - Ensure the transaction amount does not exceed your current balance.
    - Receive a notification after a successful transaction.
    
@@ -90,12 +90,9 @@ Ensure you have the following setup before running the project:
 - **Navigation:** The app uses a main navigation file for screens like Sign In, Sign Up, and the Main Screen (which hosts the bottom bar and other services).
 - **Validation:** The app includes robust validation, ensuring all transactions are secure and meet the required conditions.
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgements
 We would like to thank our team for their hard work and dedication in building this application.
 
 ---
 
-Please follow this README closely to set up and use the Money Transfer App. For further assistance, feel free to contact our support team. Enjoy seamless and secure money transfers!
+Please follow this README closely to set up and use the Money Transfer App. For further assistance, feel free to contact me. Enjoy seamless and secure money transfers!
