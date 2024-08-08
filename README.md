@@ -2,7 +2,7 @@
 
 Welcome to the Money Transfer App! This project is a comprehensive solution for managing bank accounts and performing secure money transfers. Built with Jetpack Compose, Coroutines, and Retrofit, it offers a smooth and efficient user experience. Please follow the sequence of actions outlined below to ensure proper setup and usage.
 # Simulation
-![Demo](<img src="https://github.com/MalakAmgad/MoneyTransfareApplicationBankMisrIntern/blob/master/Speedo%20Demo.gif" width="400px" />)
+![Demo]("https://github.com/MalakAmgad/MoneyTransfareApplicationBankMisrIntern/blob/master/Speedo%20Demo.gif)
 
 [Watch the demo video](https://vimeo.com/996309441?share=copy)
 
