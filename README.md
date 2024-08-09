@@ -148,4 +148,4 @@ We would like to thank our team for their hard work and dedication in building t
 
 ---
 
-Please follow this README closely to set up and use the Money Transfer App. For further assistance, feel free to contact me. Enjoy seamless and secure money transfers!
+Please follow this README closely to set up and use the Money Transfer App. For further assistance, feel free to contact us. Enjoy seamless and secure money transfers!
