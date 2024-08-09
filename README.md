@@ -46,6 +46,58 @@ Welcome to the Money Transfer App! This project is a comprehensive solution for 
    
 9. **Favorites Management (Optional):**
    - Save favorite recipients for quick access and delete them if needed.
+  
+The architecture of the project in your screenshots appears to be organized in a modular and clean structure, which is typical for Android projects following MVVM (Model-View-ViewModel) architecture principles. Here's a description that you can add to your README on GitHub:
+
+---
+
+### Project Architecture
+
+This project follows a modular architecture pattern, with a clear separation of concerns and organized packages. The main architecture of the project is structured into the following components:
+
+1. **APIs:**
+   - **register:** Contains classes related to the user registration API (`registerAPICallable`, `registerAPIService`).
+   - **signin:** Contains classes related to the user sign-in API (`signinAPICallable`, `signInAPIService`).
+   - **Transaction:** Handles transaction-related API calls (`TransactionAPICallable`, `TransactionAPIService`).
+   - **user:** Manages user-related API calls (`UserApiCallable`, `UserAPIService`).
+
+2. **Constants:**
+   - Contains constant values used across the application (`constants.kt`).
+
+3. **Database:**
+   - **user:** Manages the user database and data access objects (DAO) (`Favourite`, `FavouriteDAO`, `User`, `UserDAO`, `transactionDAO.kt`, `UserDBHelper`).
+   - **models:** Contains the data models used in the application (`BottomNavigationItem`, `register`, `signIn`, `Transaction.kt`).
+
+4. **Routes:**
+   - Manages application navigation (`Approutes.kt`, `MainNavigation.kt`).
+
+5. **UI:**
+   - **commonUI:** Shared UI components across the application like the bottom navigation bar (`bottomBar.kt`).
+   - **Error:** Handles error screens like `internetConnectionError.kt` and `serverError.kt`.
+   - **main:** Main UI screens of the application divided into sub-packages:
+     - **home:** Contains the home screen and its components (`notifications.kt`, `TransfareMainScreen.kt`).
+     - **more:** Manages additional screens like favorites (`FavouriteScreen.kt`, `MoreMainScreen.kt`).
+     - **myCards:** Handles the card-related UI screens (`MyCardsScreen.kt`).
+     - **Transaction:** Manages transaction-related screens (`TransactionDetails.kt`, `Transactions.kt`, `TransactionViewModel`).
+     - **transfare:** Contains the UI for transferring funds (`TransferConfirmationScreen.kt`, `TransferPaymentScree.kt`, `TransferScreen.kt`, `Idleviewmodel.kt`, `MainScreen.kt`).
+
+6. **SignInUp:**
+   - **signIn:** Contains sign-in related UI and ViewModel (`LoginviewModel.kt`, `signIn.kt`).
+   - **signUp1 & signUp2:** Handles the sign-up process across multiple screens (`SignUpScreen1.kt`, `SignUpScreen2.kt`, `userViewModel.kt`).
+   - **SpeedoTransfare:** Manages speedo transfer screens and its ViewModel (`SpeedoTransfareScreen.kt`, `Lunhcer.kt`, `RegisterViewModel.kt`).
+
+7. **Values**
+   - Contains application-wide range of colors  (`Colors.xml`).
+
+8. **MainActivity:**
+   - The main entry point of the application (`MainActivity.kt`).
+
+9. **Resources:**
+   - **drawable:** Contains XML files for drawable resources used in the UI (`_04_error.xml`, `account_1.xml`, etc.).
+
+The architecture follows the MVVM (Model-View-ViewModel) pattern, ensuring a clear separation between the user interface and the business logic, which makes the codebase more modular, maintainable, and testable.
+
+
 
 ## Getting Started
 ### Prerequisites
